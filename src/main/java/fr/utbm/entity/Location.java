@@ -29,22 +29,18 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "LOCATION")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Location.findAll", query = "SELECT l FROM Location l")})
-public class Location implements Serializable {
+public class Location {
 
-    private static final long serialVersionUID = 1L;
+   
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "ID")
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 128)
+    
+   
     @Column(name = "CITY")
     private String city;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "locationId")
     private Collection<CourseSession> courseSessionCollection;
 
