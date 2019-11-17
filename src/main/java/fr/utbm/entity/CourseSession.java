@@ -33,26 +33,18 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "COURSE_SESSION")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "CourseSession.findAll", query = "SELECT c FROM CourseSession c")})
-public class CourseSession implements Serializable {
+//    @NamedQuery(name = "CourseSession.findAll", query = "SELECT c FROM CourseSession c")})
+public class CourseSession {
 
-    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "ID")
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "START_DATE")
     @Temporal(TemporalType.DATE)
     private Date startDate;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "END_DATE")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.DATE) // date time timestamp
     private Date endDate;
     @Column(name = "MAX_NUMBER")
     private Integer maxNumber;
@@ -157,7 +149,8 @@ public class CourseSession implements Serializable {
 
     @Override
     public String toString() {
-        return "fr.utbm.entity.CourseSession[ id=" + id + " ]";
+        return "CourseSession{" + "id=" + id + ", startDate=" + startDate + ", endDate=" + endDate + ", maxNumber=" + maxNumber + ", locationId=" + locationId + ", courseId=" + courseId + '}';
     }
+
     
 }
