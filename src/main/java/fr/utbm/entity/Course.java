@@ -34,14 +34,8 @@ public class Course implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 16)
     @Column(name = "ID")
     private String id;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 128)
     @Column(name = "TITLE")
     private String title;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "courseId")
