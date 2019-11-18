@@ -10,6 +10,7 @@ import java.util.List;
 /**
  *
  * @author wuying
+ * @param <T>
  */
 public interface BaseDao<T> {
      public void save(T entity);  

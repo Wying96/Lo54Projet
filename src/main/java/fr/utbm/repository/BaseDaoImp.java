@@ -20,15 +20,16 @@ import org.hibernate.SessionFactory;
 /**
  *
  * @author wuying
+ * @param <T>
  */
 
 public class BaseDaoImp<T> implements BaseDao <T> {
-    private Class<T> clazz;  
+    private final Class<T> clazz;  
   /** 
      * 向DAO层注入SessionFactory 
      */  
     @Resource  
-    private SessionFactory sessionFactory;  
+    private final SessionFactory sessionFactory;  
     
     /** 
      * 通过构造方法指定DAO的具体实现类 
@@ -48,6 +49,7 @@ public class BaseDaoImp<T> implements BaseDao <T> {
         return this.sessionFactory.openSession();  
     }  
   
+    @Override
     public void save(T entity) {
         Session session = this.getSession();
         try{
@@ -113,10 +115,17 @@ public class BaseDaoImp<T> implements BaseDao <T> {
         }  
     }  
   
+    /**
+     *
+     * @param id
+     * @return
+     */
+    @Override
     public T findById(Serializable id) {  
         return (T) this.getSession().get(this.clazz, id);  
     }  
   
+    @Override
     public List<T> findAll() {
 //        int index = this.clazz.toString().split(".").length;
         String cla = this.clazz.toString();
