@@ -30,12 +30,12 @@ public class CourseDaoImp extends BaseDaoImp<Course> implements CourseDao {
 
     public List<Course> findBy2SessionTime(Date startDate, Date endDate) {//Object... params
         //Date startDate, Date endDate
-        String hql = "from Course c "
-                + "where c.CourseSession.startDate > :startDate"
-                + "and c.CourseSession.endDate < :endDate";
+        String hql = "from Course c Left Join fetch c.courseSessionCollection v where v.startDate > :startDate and v.endDate < :endDate";
         Query query = this.getSession().createQuery(hql);  
+      
         query.setDate("startDate", startDate);  
         query.setDate("endDate", endDate);
+       
         return query.list(); 
     }
 
