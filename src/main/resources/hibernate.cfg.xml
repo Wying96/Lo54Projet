@@ -45,5 +45,12 @@ Contributor(s):
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/FormationEcole</property>
     <property name="hibernate.connection.username">root</property>
+       <property name="show_sql">true</property>
+    <property name="format_sql">true</property>
+    <mapping class="fr.utbm.entity.Location"/>
+    <mapping class="fr.utbm.entity.Client"/>
+    <mapping class="fr.utbm.entity.CourseSession"/>
+    <mapping class="fr.utbm.entity.Course"/>
+    <mapping class="fr.utbm.entity.Users"/>
   </session-factory>
 </hibernate-configuration>

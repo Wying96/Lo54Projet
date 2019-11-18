@@ -25,7 +25,7 @@ LocationDaoImp lp=new LocationDaoImp();
     for(Location l: ls){
     System.out.println(l.toString());
     
-System.exit(0);
 }
+System.exit(0);
     }
 }
