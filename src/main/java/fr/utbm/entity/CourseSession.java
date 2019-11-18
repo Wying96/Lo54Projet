@@ -48,12 +48,15 @@ public class CourseSession {
     private Date endDate;
     @Column(name = "MAX_NUMBER")
     private Integer maxNumber;
+    
     @JoinColumn(name = "LOCATION_ID", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private Location locationId;
+    
     @JoinColumn(name = "COURSE_ID", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private Course courseId;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "courseSessionId")
     private Collection<Client> clientCollection;
 

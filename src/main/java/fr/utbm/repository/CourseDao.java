@@ -6,6 +6,7 @@
 package fr.utbm.repository;
 
 import fr.utbm.entity.Course;
+import fr.utbm.entity.Location;
 import java.util.List;
 import java.util.Date;
 
@@ -18,7 +19,7 @@ public interface CourseDao extends BaseDao<Course> {
     
     //public List<Course> findBy2SessionTime(Object... params);
     public List<Course> findBy2SessionTime(Date stratDate, Date endDate);
-    public List<Course> findBySessionLocation(Object... params);
+    public List<Course> findBySessionLocation(Location location);
     
 
 }

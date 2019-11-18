@@ -1,6 +1,7 @@
 
 import fr.utbm.entity.Course;
 import fr.utbm.entity.Location;
+import fr.utbm.repository.BaseDao;
 import fr.utbm.repository.CourseDaoImp;
 import fr.utbm.repository.CourseSessionDaoImp;
 import fr.utbm.repository.LocationDaoImp;
@@ -35,29 +36,42 @@ public class NewClass {
 //    
 //}
 //System.exit(0);
- String str = "2019/11/5 12:12:12";
- String str2="2019/11/18 12:12:12";
-  SimpleDateFormat sdf =new SimpleDateFormat("yyyy/MM/dd HH:mm:ss" );
- Date d=new Date();
-        try {
-            d = sdf.parse(str);
-        } catch (ParseException ex) {
-            Logger.getLogger(NewClass.class.getName()).log(Level.SEVERE, null, ex);
-        }
- Date e=new Date();
-        try {
-            e = sdf.parse(str2);
-        } catch (ParseException ex) {
-            Logger.getLogger(NewClass.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-CourseDaoImp lp=new CourseDaoImp();
-List<Course> ls=lp.findBy2SessionTime(d, e);
+// String str = "2019/11/5 12:12:12";
+// String str2="2019/11/18 12:12:12";
+//  SimpleDateFormat sdf =new SimpleDateFormat("yyyy/MM/dd HH:mm:ss" );
+// Date d=new Date();
+//        try {
+//            d = sdf.parse(str);
+//        } catch (ParseException ex) {
+//            Logger.getLogger(NewClass.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+// Date e=new Date();
+//        try {
+//            e = sdf.parse(str2);
+//        } catch (ParseException ex) {
+//            Logger.getLogger(NewClass.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//
+//CourseDaoImp lp=new CourseDaoImp();
+//List<Course> ls=lp.findBy2SessionTime(d, e);
+// for(Course l: ls){
+//    System.out.println(l.getId());
+//    
+//}
+//System.exit(0);
+LocationDaoImp lp=new LocationDaoImp();
+Location lo=lp.findById(2);
+CourseDaoImp lp2=new CourseDaoImp();
+List<Course> ls=lp2.findBySessionLocation(lo);
  for(Course l: ls){
     System.out.println(l.getId());
     
 }
 System.exit(0);
+
+
+
+
 
     }
 }

@@ -6,6 +6,7 @@
 package fr.utbm.repository;
 
 import fr.utbm.entity.Course;
+import fr.utbm.entity.Location;
 import java.util.Date;
 import java.util.List;
 import org.hibernate.Query;
@@ -30,7 +31,9 @@ public class CourseDaoImp extends BaseDaoImp<Course> implements CourseDao {
 
     public List<Course> findBy2SessionTime(Date startDate, Date endDate) {//Object... params
         //Date startDate, Date endDate
-        String hql = "from Course c Left Join fetch c.courseSessionCollection v where v.startDate > :startDate and v.endDate < :endDate";
+        String hql = "from Course c Left Join "
+                + "fetch c.courseSessionCollection v "
+                + "where v.startDate > :startDate and v.endDate < :endDate";
         Query query = this.getSession().createQuery(hql);  
       
         query.setDate("startDate", startDate);  
@@ -39,9 +42,17 @@ public class CourseDaoImp extends BaseDaoImp<Course> implements CourseDao {
         return query.list(); 
     }
 
-    @Override
-    public List<Course> findBySessionLocation(Object... params) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    
+    public List<Course> findBySessionLocation(Location location) {
+       String hql = "from Course c "
+               + "Left Join fetch c.courseSessionCollection v "
+               + "where v.locationId = :location";
+        Query query = this.getSession().createQuery(hql);  
+      
+        query.setParameter("location", location);
+
+       
+        return query.list(); 
     }
  
     

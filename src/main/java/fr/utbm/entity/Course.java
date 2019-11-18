@@ -36,8 +36,10 @@ public class Course implements Serializable {
     @Id
     @Column(name = "ID")
     private String id;
+    
     @Column(name = "TITLE")
     private String title;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "courseId")
     private Collection<CourseSession> courseSessionCollection;
 
