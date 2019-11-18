@@ -29,6 +29,7 @@ public class CourseDaoImp extends BaseDaoImp<Course> implements CourseDao {
         return query.list(); 
     }
 
+    @Override
     public List<Course> findBy2SessionTime(Date startDate, Date endDate) {//Object... params
         //Date startDate, Date endDate
         String hql = "from Course c Left Join "
@@ -41,19 +42,28 @@ public class CourseDaoImp extends BaseDaoImp<Course> implements CourseDao {
        
         return query.list(); 
     }
-
     
+    @Override
     public List<Course> findBySessionLocation(Location location) {
        String hql = "from Course c "
                + "Left Join fetch c.courseSessionCollection v "
                + "where v.locationId = :location";
+        Query query = this.getSession().createQuery(hql);
+        query.setParameter("location", location);
+        return query.list(); 
+    }
+
+    @Override
+    public List<Course> findByOneDayDispon(Date dateDispon) {
+        String hql = "from Course c Left Join "
+                + "fetch c.courseSessionCollection v "
+                + "where v.startDate < :dateDispon1 and v.endDate > :dateDispon2";
         Query query = this.getSession().createQuery(hql);  
       
-        query.setParameter("location", location);
-
+        query.setDate("dateDispon1", dateDispon);
+        query.setDate("dateDispon2", dateDispon);
        
         return query.list(); 
     }
- 
     
 }

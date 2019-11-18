@@ -19,15 +19,15 @@ import org.hibernate.Session;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author wuying
  */
 public class NewClass {
+
     public static void main(String[] args) {
         //Session session = HibernateUtil.getSessionFactory().openSession();
-        
+
 //LocationDaoImp lp=new LocationDaoImp();
 //    List<Location> ls = lp.findAll();
 //    
@@ -36,6 +36,7 @@ public class NewClass {
 //    
 //}
 //System.exit(0);
+//测试搜索一个时间段之内的可用的课程
 // String str = "2019/11/5 12:12:12";
 // String str2="2019/11/18 12:12:12";
 //  SimpleDateFormat sdf =new SimpleDateFormat("yyyy/MM/dd HH:mm:ss" );
@@ -59,19 +60,33 @@ public class NewClass {
 //    
 //}
 //System.exit(0);
-LocationDaoImp lp=new LocationDaoImp();
-Location lo=lp.findById(2);
-CourseDaoImp lp2=new CourseDaoImp();
-List<Course> ls=lp2.findBySessionLocation(lo);
- for(Course l: ls){
-    System.out.println(l.getId());
-    
-}
-System.exit(0);
+//
+//测试按照上课的地址搜索课程
+//LocationDaoImp lp=new LocationDaoImp();
+//Location lo=lp.findById(2);
+//CourseDaoImp lp2=new CourseDaoImp();
+//List<Course> ls=lp2.findBySessionLocation(lo);
+// for(Course l: ls){
+//    System.out.println(l.getId());
+//    
+//}
+//测试按照一个时间搜课程
+        CourseDaoImp lp2 = new CourseDaoImp();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date dateDispon = new Date();
+        try {
+            dateDispon = sdf.parse("2019-11-10"); // 之後要看 controller 層傳入的數據了
+        } catch (ParseException ex) {
+            Logger.getLogger(NewClass.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        List<Course> lcs = lp2.findByOneDayDispon(dateDispon);
+        for (Course c : lcs) {
+            System.out.println(c.toString());
 
+        }
 
-
-
-
+        
+        
+        System.exit(0);
     }
 }
