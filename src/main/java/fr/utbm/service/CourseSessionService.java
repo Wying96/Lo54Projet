@@ -9,11 +9,13 @@ import fr.utbm.entity.CourseSession;
 import fr.utbm.repository.CourseSessionDaoImp;
 import java.io.Serializable;
 import java.util.List;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author wuying
  */
+@Service
 public class CourseSessionService {
     public void save(CourseSession courseSession){
         CourseSessionDaoImp courseSessionDao = new CourseSessionDaoImp();

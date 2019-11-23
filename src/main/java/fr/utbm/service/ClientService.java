@@ -9,11 +9,13 @@ import fr.utbm.entity.Client;
 import fr.utbm.repository.ClientDaoImp;
 import java.io.Serializable;
 import java.util.List;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author wuying
  */
+@Service
 public class ClientService {
     public void save(Client client){
         ClientDaoImp clientDao = new ClientDaoImp();

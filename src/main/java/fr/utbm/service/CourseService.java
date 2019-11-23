@@ -12,11 +12,14 @@ import fr.utbm.repository.CourseDaoImp;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author wuying
  */
+
+@Service
 public class CourseService {
     
     public List<Course> findByTitle(String title){

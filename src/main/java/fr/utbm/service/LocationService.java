@@ -9,11 +9,13 @@ import fr.utbm.entity.Location;
 import fr.utbm.repository.LocationDaoImp;
 import java.io.Serializable;
 import java.util.List;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author wuying
  */
+@Service
 public class LocationService {
      public void save(Location location){
         LocationDaoImp locationDao = new LocationDaoImp();
