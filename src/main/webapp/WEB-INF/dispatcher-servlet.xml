@@ -3,8 +3,8 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
-    <bean name="/wu.htm" class="fr.utbm.controller.HelloController" />
-    <bean name="/courses.htm" class="fr.utbm.controller.CoursController" />
+    <bean name="/wu" class="fr.utbm.controller.HelloController" />
+    <bean name="/courses" class="fr.utbm.controller.CoursController" />
 
     		
     <bean id="viewResolver"
