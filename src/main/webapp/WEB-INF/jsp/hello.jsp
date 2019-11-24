@@ -12,6 +12,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello Wu Ying</h1>
+        <h1>Controller中的message</h1>
+        ${message}
     </body>
 </html>
