@@ -28,7 +28,7 @@ public class BaseDaoImp<T> implements BaseDao <T> {
   /** 
      * 向DAO层注入SessionFactory 
      */  
-    @Resource  
+   
     private final SessionFactory sessionFactory;  
     
     /** 

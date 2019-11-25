@@ -14,7 +14,8 @@ import java.util.Date;
  *
  * @author wuying
  */
-public interface CourseDao extends BaseDao<Course> {
+public interface CourseDao  {
+    
     public List<Course> findByTitle(String title);
     
     //public List<Course> findBy2SessionTime(Object... params);

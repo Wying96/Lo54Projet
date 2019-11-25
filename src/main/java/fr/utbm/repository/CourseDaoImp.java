@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository;
  *
  * @author c
  */
-@Repository(value = "CourseDao")  
+@Repository(value = "courseDao") 
 public class CourseDaoImp extends BaseDaoImp<Course> implements CourseDao {
 //筛选的解决方案 1.直接写HQL进行删选 或者  2.先选出全部再在service中进行筛选
     @Override

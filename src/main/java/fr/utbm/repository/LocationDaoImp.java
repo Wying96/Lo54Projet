@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
  *
  * @author wuying
  */
-@Repository(value = "LocationDao")  
+@Repository()  
 public class LocationDaoImp extends BaseDaoImp<Location> implements LocationDao {
     
 }

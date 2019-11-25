@@ -9,6 +9,8 @@ import fr.utbm.entity.Course;
 import fr.utbm.repository.CourseDaoImp;
 import fr.utbm.service.CourseService;
 import java.util.List;
+import javax.annotation.Resource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +21,10 @@ import org.springframework.web.bind.annotation.*;
  */
 @Controller
 public class HelloController {
-    @RequestMapping(value="/wu",method=RequestMethod.GET) //用于配制url路径
+     @Autowired
+    public CourseService courseService;
+      
+    @RequestMapping(value="/wu.do",method=RequestMethod.GET) //用于配制url路径
     public String printHello(ModelMap model){
 // 使用courseDAO返回数据成功
 //    CourseDaoImp coursDao = new CourseDaoImp();
@@ -27,7 +32,7 @@ public class HelloController {
 //    model.addAttribute("cours",cs);
 
 //使用Service返回数据成功
-        CourseService courseService = new CourseService();
+//        CourseService courseService = new CourseService();
         List<Course> cs = courseService.findByTitle("a");
         model.addAttribute("cours",cs);
 
