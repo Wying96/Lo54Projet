@@ -79,8 +79,15 @@ public class NewClass {
         } catch (ParseException ex) {
             Logger.getLogger(NewClass.class.getName()).log(Level.SEVERE, null, ex);
         }
-        List<Course> lcs = lp2.findByOneDayDispon(dateDispon);
-        for (Course c : lcs) {
+//        List<Course> lcs = lp2.findByOneDayDispon(dateDispon);
+//        for (Course c : lcs) {
+//            System.out.println(c.toString());
+//
+//        }
+        
+        
+        List<Course> lcs2 = lp2.findByMultiCcondition("a", null, null, null);
+        for (Course c : lcs2) {
             System.out.println(c.toString());
 
         }

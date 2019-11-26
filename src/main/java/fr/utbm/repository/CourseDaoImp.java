@@ -9,6 +9,7 @@ import fr.utbm.entity.Course;
 import fr.utbm.entity.Location;
 import java.util.Date;
 import java.util.List;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 
@@ -104,10 +105,11 @@ public class CourseDaoImp extends BaseDaoImp<Course> implements CourseDao {
         }
 
         Query query = this.getSession().createQuery(hql);
-        if (title != null) { query.setString("partOfTitle", title);}
+        if (title != null) { query.setString("partOfTitle", "%" + title + "%");}
         if (startDate != null) { query.setDate("startDate", startDate);}
         if (endDate != null) { query.setDate("endDate", endDate);}
         if (locationId != null) {query.setInteger("locationId", locationId);}
+        query.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 
         return query.list();
     }
