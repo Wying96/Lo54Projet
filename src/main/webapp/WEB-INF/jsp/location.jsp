@@ -42,22 +42,33 @@
 
                     <tr>
                         <th>编号</th>
-
+                        <th>编号</th>
+                        <th>编号</th>
+                        
+                        <th>编号</th>
+                        <th>编号</th>
+                        <th>编号</th>
+                        
+                        <th>编号</th>
+                        <th>编号</th>
+                        <th>编号</th>
                     </tr>
                 </thead>
                 <tbody>
                     <c:forEach var="oneuser" items="${users}">
                         <tr>
-                            <td>${oneuser.id}</td>
-                            <td>${oneuser.title}</td>
-                            <td>
-                                <table >
+                            
+                            
+
                                     <c:forEach var="courseSession" items="${oneuser.courseSessionCollection}">
                                         <tr>
+                                            <td>${oneuser.id}</td>
+                                            <td>${oneuser.title}</td>
                                             <td>${courseSession.id}</td>
                                             <td>${courseSession.startDate}</td>
                                             <td>${courseSession.endDate}</td>
-                                            <td>${courseSession.maxNumber}</td>
+                                            <td>${courseSession.clientCollection.size()}/${courseSession.maxNumber}</td>
+                                            <td></td>
                                             <td>${courseSession.locationId.city}</td>
                                             <td>
                                                 <button type="submit" class="sui-btn btn-info">注冊</button></td>
@@ -65,8 +76,8 @@
                                         </tr>
                                         
                                     </c:forEach>
-                                </table>
-                            </td>
+                               
+                           
                         </tr>
                     </c:forEach>
                 </tbody>

@@ -24,5 +24,5 @@ public interface CourseDao  {
     public List<Course> findByOneDayDispon(Date dateDispon);
     public List<Course> findByMultiCcondition(String title, Date startDate,
             Date endDate, Integer locationId);
-
+adss
 }
