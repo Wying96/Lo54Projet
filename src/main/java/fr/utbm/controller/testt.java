@@ -42,7 +42,7 @@ public class testt {
 //        request.setAttribute("message", "Hello WU Ying! \n 测试service返回数据:");
 //
 //    return "location";}
-     @RequestMapping(value="/fuck")
+     @RequestMapping(value="/")
 	public String main(HttpServletRequest request,HttpServletResponse response){
         		
 		List<Course> users =courseService.findByTitle("a");
