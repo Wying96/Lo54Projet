@@ -25,7 +25,7 @@ public class HelloController {
     @Autowired
     public CourseService courseService;
 
-    @RequestMapping(value = "/wu.do", method = RequestMethod.GET) //用于配制url路径
+    @RequestMapping(value = "/wu", method = RequestMethod.GET) //用于配制url路径
     public String printHello(ModelMap model) {
         List<Course> cs = courseService.findByTitle("a");
         model.addAttribute("cours", cs);
