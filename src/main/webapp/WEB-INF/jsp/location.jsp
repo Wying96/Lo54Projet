@@ -27,7 +27,7 @@
                 <button type="submit" class="sui-btn btn-info">查询</button>
             </form>
         </div>
-         <div class="sui-container">
+        <div class="sui-container">
             <form class="sui-form form-search" action="searchMultiCondition" method="post">
                 Part of Title: <input type="text" class="input-medium search-query" name="title">
                 Start Date: <input type="text" class="input-medium search-query" name="dateStart">
@@ -50,12 +50,23 @@
                         <tr>
                             <td>${oneuser.id}</td>
                             <td>${oneuser.title}</td>
-                            <c:forEach var="courseSession" items="${oneuser.courseSessionCollection}">
-                            <td>${courseSession.startDate}</td>
-                            <td>${courseSession.endDate}</td>
-                            <td>${courseSession.maxNumber}</td>
-                            <td>${courseSession.locationId.city}</td>
-                            </c:forEach>
+                            <td>
+                                <table >
+                                    <c:forEach var="courseSession" items="${oneuser.courseSessionCollection}">
+                                        <tr>
+                                            <td>${courseSession.id}</td>
+                                            <td>${courseSession.startDate}</td>
+                                            <td>${courseSession.endDate}</td>
+                                            <td>${courseSession.maxNumber}</td>
+                                            <td>${courseSession.locationId.city}</td>
+                                            <td>
+                                                <button type="submit" class="sui-btn btn-info">注冊</button></td>
+                                            </form>
+                                        </tr>
+                                        
+                                    </c:forEach>
+                                </table>
+                            </td>
                         </tr>
                     </c:forEach>
                 </tbody>
