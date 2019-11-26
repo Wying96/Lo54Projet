@@ -22,6 +22,7 @@ public interface CourseDao  {
     public List<Course> findBy2SessionTime(Date stratDate, Date endDate);
     public List<Course> findBySessionLocation(Location location);
     public List<Course> findByOneDayDispon(Date dateDispon);
-    
+    public List<Course> findByMultiCcondition(String title, Date startDate,
+            Date endDate, Integer locationId);
 
 }

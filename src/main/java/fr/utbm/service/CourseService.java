@@ -30,6 +30,11 @@ public class CourseService {
         return courseDao.findByTitle(title);
     }
     
+     public List<Course> findByMultiCcondition(String title, Date startDate,
+            Date endDate, Integer locationId) {
+          return courseDao.findByMultiCcondition(title, startDate, endDate, locationId);
+     }
+    
 //    public List<Course> findBy2SessionTime(Date startDate, Date endDate){
 ////        CourseDaoImp courseDao =new CourseDaoImp();
 //        return courseDao.findBy2SessionTime(startDate, endDate);
