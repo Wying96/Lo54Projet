@@ -5,9 +5,13 @@
  */
 package fr.utbm.controller;
 
+import fr.utbm.entity.Client;
 import fr.utbm.entity.Course;
+import fr.utbm.entity.CourseSession;
 import fr.utbm.entity.Location;
+import fr.utbm.service.ClientService;
 import fr.utbm.service.CourseService;
+import fr.utbm.service.CourseSessionService;
 import fr.utbm.service.LocationService;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -22,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -36,6 +41,11 @@ public class testt {
 
     @Autowired
     public CourseService courseService;
+    @Autowired
+    public  LocationService locationService;
+    @Autowired
+    public CourseSessionService courseSessionService;
+    
 
 //     @RequestMapping(value="/fuck") //用于配制url路径
 //     public String main(HttpServletRequest request,HttpServletResponse response){
@@ -49,10 +59,12 @@ public class testt {
     @RequestMapping(value = "/")
     public String main(HttpServletRequest request, HttpServletResponse response) {
 
-        List<Course> users = courseService.findByTitle("a");
-        request.setAttribute("users", users);
-
-        return "location";
+        List<Course> users = courseService.findAll();
+//       LocationService locationService=new LocationService();
+       List<Location> location=locationService.findAll();
+       request.setAttribute("lists", location);
+ request.setAttribute("users", users);
+        return "coursesession";
     }
 //    public String printHello(ModelMap model){
 ////使用Service返回数据成功
@@ -68,10 +80,10 @@ public class testt {
     @RequestMapping(value = "/searchMultiCondition")
     public String searchName(HttpServletRequest request, HttpServletResponse response) {
         String parteOfTitle = request.getParameter("title");
-        String dateStart = request.getParameter("dateStart");
-        String dateEnd = request.getParameter("dateEnd");
-        String locaId = request.getParameter("locationId");
-        
+        String dateStart = request.getParameter("date1");
+        String dateEnd = request.getParameter("date2");
+//        String locaId = request.getParameter("locationId");
+        String locaId=request.getParameter("city");
         Integer locationId = (locaId!="")? Integer.parseInt(locaId):null;
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -99,7 +111,38 @@ public class testt {
 
         List<Course> coursesResults = courseService.findByMultiCcondition(parteOfTitle, startDate, endDate, locationId);
         request.setAttribute("users", coursesResults);
-
-        return "location";
+//LocationService locationService=new LocationService();
+       List<Location> location=locationService.findAll();
+       request.setAttribute("lists", location);
+        return "coursesession";
     }
+ 
+    @RequestMapping(value = "/updateUser/{courseSession.id}")
+  public String registrer(HttpServletRequest request, @PathVariable("courseSession.id") String  courseId){
+  request.setAttribute("course", courseId);		
+		return "register";		
+  }
+   @RequestMapping(value = "/registrersession")
+  public String registrerSession(HttpServletRequest request,HttpServletResponse response){
+      Integer id=Integer.parseInt(request.getParameter("coursesessionid"));
+      String lastname = request.getParameter("lastname");
+        String firstname = request.getParameter("firstname");
+        String address = request.getParameter("address");
+        String email = request.getParameter("email");
+        String phone = request.getParameter("phone");
+//        CourseSessionService courseSessionService=new CourseSessionService();
+        CourseSession cs=new CourseSession();
+        cs=courseSessionService.findById(id);
+        ClientService clientservice=new ClientService();
+        Client client=new Client();
+        client.setPhone(phone);
+        client.setAddress(address);
+        client.setCourseSessionId(cs);
+        client.setFirstname(firstname);
+        client.setEmail(email);
+        client.setLastname(lastname);
+        clientservice.save(client);
+ return "redirect:/";
+  }
+
 }

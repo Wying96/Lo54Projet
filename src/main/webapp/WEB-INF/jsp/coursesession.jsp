@@ -10,8 +10,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
-<html>
+<html lang = "en">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
@@ -19,45 +20,55 @@
               rel="stylesheet">
     </head>
     <body>
-        <h1>是你掉的这些课吗？</h1>
+        <h1 align="center">Cours</h1>
 
         <div class="sui-container">
-            <form class="sui-form form-search" action="searchName" method="post">
-                <input type="text" class="input-medium search-query" name="title">
-                <button type="submit" class="sui-btn btn-info">查询</button>
-            </form>
+           
         </div>
         <div class="sui-container">
             <form class="sui-form form-search" action="searchMultiCondition" method="post">
                 Part of Title: <input type="text" class="input-medium search-query" name="title">
-                Start Date: <input type="text" class="input-medium search-query" name="dateStart">
-                Start Date: <input type="text" class="input-medium search-query" name="dateEnd">
-                Choose one location: <input type="text" class="input-medium search-query" name="locationId">
-                <button type="submit" class="sui-btn btn-info">查询</button>
+             
+                <span> Start Date：</span><input type="date" name="date1" data-date-format="YYYY-MM-DD" lang="en"/>
+                  <span> End Date：</span><input type="date" name="date2" pattern="YYYY-DD-MM" lang="en"/>
+                Choose one location:                 
+                <select name="city" id="cityName" > 
+    <c:forEach var="cityname" items="${lists}"> 
+     <option value="${cityname.id}">${cityname.city}</option> 
+    </c:forEach> 
+</select> 
+                <button type="submit" class="sui-btn btn-info">chercher</button>
             </form>
         </div>
         <div class="sui-container">
             <table class="sui-table table-primary">
                 <thead>
-
                     <tr>
-                        <th>编号</th>
-                        <th>编号</th>
-                        <th>编号</th>
-                        
-                        <th>编号</th>
-                        <th>编号</th>
-                        <th>编号</th>
-                        
-                        <th>编号</th>
-                        <th>编号</th>
-                        <th>编号</th>
+                        <th>Code</th>
+                        <th>Title</th>
+                        <th>N° session</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>nombre/nombre maximale</th>
+                        <th>city</th>
+                        <th>operation</th>
+
                     </tr>
                 </thead>
                 <tbody>
                     <c:forEach var="oneuser" items="${users}">
                         <tr>
-                            
+                            <c:if test="${oneuser.courseSessionCollection.size() ==0}">
+                                <td><c:out value="${oneuser.id}"/></td>
+                                <td><c:out value="${oneuser.title}"/></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                  </tr>        
+</c:if>
                             
 
                                     <c:forEach var="courseSession" items="${oneuser.courseSessionCollection}">
@@ -68,10 +79,11 @@
                                             <td>${courseSession.startDate}</td>
                                             <td>${courseSession.endDate}</td>
                                             <td>${courseSession.clientCollection.size()}/${courseSession.maxNumber}</td>
-                                            <td></td>
+                                        
                                             <td>${courseSession.locationId.city}</td>
                                             <td>
-                                                <button type="submit" class="sui-btn btn-info">注冊</button></td>
+                                                <button class="sui-btn btn-success"><a href="updateUser/${courseSession.id}">pré-inscrire</a></button>
+                                            </td>
                                             </form>
                                         </tr>
                                         

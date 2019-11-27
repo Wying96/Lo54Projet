@@ -81,18 +81,18 @@ public class CourseDaoImp extends BaseDaoImp<Course> implements CourseDao {
         }
         if (startDate != null) {
             if (firstCondition) {
-                hql += "where v.startDate <= :startDate ";
+                hql += "where v.startDate >= :startDate ";
                 firstCondition = false;
             } else {
-                hql += "and v.startDate <= :startDate ";
+                hql += "and v.startDate >= :startDate ";
             }
         }
         if (endDate != null) {
             if (firstCondition) {
-                hql += "where v.endDate >= :endDate ";
+                hql += "where v.endDate <= :endDate ";
                 firstCondition = false;
             } else {
-                hql += "and v.endDate >= :endDate ";
+                hql += "and v.endDate <= :endDate ";
             }
         }
         if (locationId != null) {

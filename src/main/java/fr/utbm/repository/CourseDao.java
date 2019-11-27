@@ -6,15 +6,17 @@
 package fr.utbm.repository;
 
 import fr.utbm.entity.Course;
+import fr.utbm.entity.CourseSession;
 import fr.utbm.entity.Location;
 import java.util.List;
 import java.util.Date;
+import org.hibernate.Query;
 
 /**
  *
  * @author wuying
  */
-public interface CourseDao  {
+public interface CourseDao extends BaseDao<Course> {
     
     public List<Course> findByTitle(String title);
     
@@ -24,5 +26,5 @@ public interface CourseDao  {
     public List<Course> findByOneDayDispon(Date dateDispon);
     public List<Course> findByMultiCcondition(String title, Date startDate,
             Date endDate, Integer locationId);
-adss
+
 }

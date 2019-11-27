@@ -64,8 +64,7 @@ public class CourseService {
 ////        CourseDaoImp courseDao = new CourseDaoImp();
 //        return courseDao.findById(id);       
 //    }
-//    public List<Course> findAll(){
-////      CourseDaoImp courseDao = new CourseDaoImp();
-//      return courseDao.findAll();
-//    }
+    public List<Course> findAll() {
+        return courseDao.findAll();
+    }
 }
