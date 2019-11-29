@@ -15,28 +15,28 @@
 <html lang = "en">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>FormationEcole Courses</title>
         <link href="http://g.alicdn.com/sj/dpl/1.5.1/css/sui.min.css"
               rel="stylesheet">
     </head>
-    <body>
+    <body style="text-align:center;">
         <h1 align="center">Cours</h1>
-
+        <button class="sui-btn btn-success"><a href="inscrire">s'inscrire</a></button>
         <div class="sui-container">
-           
+
         </div>
         <div class="sui-container">
-            <form class="sui-form form-search" action="searchMultiCondition" method="post">
+            <form class="sui-form form-search" action="searchMultiCondition" method="post" >
                 Part of Title: <input type="text" class="input-medium search-query" name="title">
-             
-                <span> Start Date：</span><input type="date" name="date1" data-date-format="YYYY-MM-DD" lang="en"/>
-                  <span> End Date：</span><input type="date" name="date2" pattern="YYYY-DD-MM" lang="en"/>
+
+                <span> Start After Date：</span><input type="date" name="date1" data-date-format="YYYY-MM-DD" lang="en"/>
+                <span> End Before Date：</span><input type="date" name="date2" pattern="YYYY-DD-MM" lang="en"/>
                 Choose one location:                 
                 <select name="city" id="cityName" > 
-    <c:forEach var="cityname" items="${lists}"> 
-     <option value="${cityname.id}">${cityname.city}</option> 
-    </c:forEach> 
-</select> 
+                    <c:forEach var="cityname" items="${lists}"> 
+                        <option value="${cityname.id}">${cityname.city}</option> 
+                    </c:forEach> 
+                </select> 
                 <button type="submit" class="sui-btn btn-info">chercher</button>
             </form>
         </div>
@@ -56,40 +56,40 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <c:forEach var="oneuser" items="${users}">
+                    <c:forEach var="oneCourse" items="${coursesList}">
                         <tr>
-                            <c:if test="${oneuser.courseSessionCollection.size() ==0}">
-                                <td><c:out value="${oneuser.id}"/></td>
-                                <td><c:out value="${oneuser.title}"/></td>
+                            <c:if test="${oneCourse.courseSessionCollection.size() ==0}">
+                                <td><c:out value="${oneCourse.id}"/></td>
+                                <td><c:out value="${oneCourse.title}"/></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                  </tr>        
-</c:if>
-                            
+                            </tr>        
+                        </c:if>
 
-                                    <c:forEach var="courseSession" items="${oneuser.courseSessionCollection}">
-                                        <tr>
-                                            <td>${oneuser.id}</td>
-                                            <td>${oneuser.title}</td>
-                                            <td>${courseSession.id}</td>
-                                            <td>${courseSession.startDate}</td>
-                                            <td>${courseSession.endDate}</td>
-                                            <td>${courseSession.clientCollection.size()}/${courseSession.maxNumber}</td>
-                                        
-                                            <td>${courseSession.locationId.city}</td>
-                                            <td>
-                                                <button class="sui-btn btn-success"><a href="updateUser/${courseSession.id}">pré-inscrire</a></button>
-                                            </td>
-                                            </form>
-                                        </tr>
-                                        
-                                    </c:forEach>
-                               
-                           
+
+                        <c:forEach var="courseSession" items="${oneCourse.courseSessionCollection}">
+                            <tr>
+                                <td>${oneCourse.id}</td>
+                                <td>${oneCourse.title}</td>
+                                <td>${courseSession.id}</td>
+                                <td>${courseSession.startDate}</td>
+                                <td>${courseSession.endDate}</td>
+                                <td>${courseSession.clientCollection.size()}/${courseSession.maxNumber}</td>
+
+                                <td>${courseSession.locationId.city}</td>
+                                <td>
+                                    <button class="sui-btn btn-success"><a href="updateUser/${courseSession.id}">pré-inscrire</a></button>
+                                </td>
+                                </form>
+                            </tr>
+
+                        </c:forEach>
+
+
                         </tr>
                     </c:forEach>
                 </tbody>

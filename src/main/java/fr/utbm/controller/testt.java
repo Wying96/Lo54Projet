@@ -42,10 +42,11 @@ public class testt {
     @Autowired
     public CourseService courseService;
     @Autowired
-    public  LocationService locationService;
+    public LocationService locationService;
     @Autowired
     public CourseSessionService courseSessionService;
-    
+    @Autowired
+    public ClientService clientService;
 
 //     @RequestMapping(value="/fuck") //用于配制url路径
 //     public String main(HttpServletRequest request,HttpServletResponse response){
@@ -59,11 +60,13 @@ public class testt {
     @RequestMapping(value = "/")
     public String main(HttpServletRequest request, HttpServletResponse response) {
 
-        List<Course> users = courseService.findAll();
+        List<Course> coursesList = courseService.findAll();
 //       LocationService locationService=new LocationService();
-       List<Location> location=locationService.findAll();
-       request.setAttribute("lists", location);
- request.setAttribute("users", users);
+        List<Location> locations = locationService.findAll();
+        //Add an empty location
+        locations.add(0, new Location(null,null));
+        request.setAttribute("lists", locations);
+        request.setAttribute("coursesList", coursesList);
         return "coursesession";
     }
 //    public String printHello(ModelMap model){
@@ -78,13 +81,13 @@ public class testt {
 //    }
 
     @RequestMapping(value = "/searchMultiCondition")
-    public String searchName(HttpServletRequest request, HttpServletResponse response) {
+    public String searchMultiCondition(HttpServletRequest request, HttpServletResponse response) {
         String parteOfTitle = request.getParameter("title");
         String dateStart = request.getParameter("date1");
         String dateEnd = request.getParameter("date2");
 //        String locaId = request.getParameter("locationId");
-        String locaId=request.getParameter("city");
-        Integer locationId = (locaId!="")? Integer.parseInt(locaId):null;
+        String locaId = request.getParameter("city");
+        Integer locationId = (locaId != "") ? Integer.parseInt(locaId) : null;
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date startDate = new Date();
@@ -110,31 +113,36 @@ public class testt {
         }
 
         List<Course> coursesResults = courseService.findByMultiCcondition(parteOfTitle, startDate, endDate, locationId);
-        request.setAttribute("users", coursesResults);
+        request.setAttribute("coursesList", coursesResults);
 //LocationService locationService=new LocationService();
-       List<Location> location=locationService.findAll();
-       request.setAttribute("lists", location);
+        List<Location> locations = locationService.findAll();
+        locations.add(0, new Location(null,null));
+        request.setAttribute("lists", locations);
         return "coursesession";
     }
- 
+
     @RequestMapping(value = "/updateUser/{courseSession.id}")
-  public String registrer(HttpServletRequest request, @PathVariable("courseSession.id") String  courseId){
-  request.setAttribute("course", courseId);		
-		return "register";		
-  }
-   @RequestMapping(value = "/registrersession")
-  public String registrerSession(HttpServletRequest request,HttpServletResponse response){
-      Integer id=Integer.parseInt(request.getParameter("coursesessionid"));
-      String lastname = request.getParameter("lastname");
+    public String registrer(HttpServletRequest request, @PathVariable("courseSession.id") String courseId) {
+        request.setAttribute("course", courseId);
+        return "register";
+    }
+
+    @RequestMapping(value = "/registrersession")
+    public String registrerSession(HttpServletRequest request, HttpServletResponse response) {
+        Integer id = Integer.parseInt(request.getParameter("coursesessionid"));
+        
+//        courseService.fin
+        
+        String lastname = request.getParameter("lastname");
         String firstname = request.getParameter("firstname");
         String address = request.getParameter("address");
         String email = request.getParameter("email");
         String phone = request.getParameter("phone");
 //        CourseSessionService courseSessionService=new CourseSessionService();
-        CourseSession cs=new CourseSession();
-        cs=courseSessionService.findById(id);
-        ClientService clientservice=new ClientService();
-        Client client=new Client();
+        CourseSession cs = new CourseSession();
+        cs = courseSessionService.findById(id);
+        ClientService clientservice = new ClientService();
+        Client client = new Client();
         client.setPhone(phone);
         client.setAddress(address);
         client.setCourseSessionId(cs);
@@ -142,7 +150,36 @@ public class testt {
         client.setEmail(email);
         client.setLastname(lastname);
         clientservice.save(client);
- return "redirect:/";
-  }
+        return "redirect:/";
+    }
 
+    @RequestMapping(value = "/inscrireclient")
+    public String inscrireClient(HttpServletRequest request, HttpServletResponse response) {
+//      Integer id=Integer.parseInt(request.getParameter("coursesessionid"));
+        String lastname = request.getParameter("lastname");
+        String firstname = request.getParameter("firstname");
+        String address = request.getParameter("address");
+        String email = request.getParameter("email");
+        String phone = request.getParameter("phone");
+//        CourseSessionService courseSessionService=new CourseSessionService();
+        CourseSession cs = new CourseSession();
+//        cs=courseSessionService.findById(id);
+        //      ClientService clientservice=new ClientService();
+        Client client = new Client();
+        client.setPhone(phone);
+        client.setAddress(address);
+        client.setCourseSessionId(cs);
+        client.setFirstname(firstname);
+        client.setEmail(email);
+        client.setLastname(lastname);
+        clientService.save(client);
+        return "inscrire";
+    }
+
+    @RequestMapping(value = "/inscrire")
+    public String inscrire(HttpServletRequest request, HttpServletResponse response) {
+//      Integer id=Integer.parseInt(request.getParameter("coursesessionid"));
+
+        return "inscrire";
+    }
 }
