@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
+import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -23,16 +24,19 @@ public class CourseDaoImp extends BaseDaoImp<Course> implements CourseDao {
 
     @Override
     public List<Course> findByTitle(String title) {
+        Session session = this.getSession();
         //这种写法有被sql注入的风险
         //String hql = "from Course c where c.title like"+ '%'+title+'%';
         String hql = "from Course c where c.title like :partOfTitle";
-        Query query = this.getSession().createQuery(hql);
+        Query query = session.createQuery(hql);
         query.setString("partOfTitle", "%" + title + "%");
+        session.close();
         return query.list();
     }
 
     @Override
     public List<Course> findBy2SessionTime(Date startDate, Date endDate) {//Object... params
+        Session session = this.getSession();
         //Date startDate, Date endDate
         String hql = "from Course c Left Join "
                 + "fetch c.courseSessionCollection v "
@@ -41,22 +45,25 @@ public class CourseDaoImp extends BaseDaoImp<Course> implements CourseDao {
 
         query.setDate("startDate", startDate);
         query.setDate("endDate", endDate);
-
+        session.close();
         return query.list();
     }
 
     @Override
     public List<Course> findBySessionLocation(Location location) {
+        Session session = this.getSession();
         String hql = "from Course c "
                 + "Left Join fetch c.courseSessionCollection v "
                 + "where v.locationId = :location";
         Query query = this.getSession().createQuery(hql);
         query.setParameter("location", location);
+        session.close();
         return query.list();
     }
 
     @Override
     public List<Course> findByOneDayDispon(Date dateDispon) {
+        Session session = this.getSession();
         String hql = "from Course c Left Join "
                 + "fetch c.courseSessionCollection v "
                 + "where v.startDate < :dateDispon1 and v.endDate > :dateDispon2";
@@ -64,14 +71,14 @@ public class CourseDaoImp extends BaseDaoImp<Course> implements CourseDao {
 
         query.setDate("dateDispon1", dateDispon);
         query.setDate("dateDispon2", dateDispon);
-
+        session.close();
         return query.list();
     }
 
     @Override
     public List<Course> findByMultiCcondition(String title, Date startDate,
             Date endDate, Integer locationId) {
-
+        Session session = this.getSession();
         String hql = "from Course c Left Join "
                 + "fetch c.courseSessionCollection v ";
         boolean firstCondition = true;
@@ -110,7 +117,7 @@ public class CourseDaoImp extends BaseDaoImp<Course> implements CourseDao {
         if (endDate != null) { query.setDate("endDate", endDate);}
         if (locationId != null) {query.setInteger("locationId", locationId);}
         query.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-
+        session.close();
         return query.list();
     }
 

@@ -11,6 +11,7 @@ import fr.utbm.entity.Users;
 import static java.util.Collections.list;
 import java.util.List;
 import org.hibernate.Query;
+import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -19,18 +20,39 @@ import org.springframework.stereotype.Repository;
  */
 @Repository(value = "usersDao")
 public class UsersDaoImp extends BaseDaoImp<Users> implements UsersDao{
+  
+   @Override
+   public Users findById(int id){
+       Session session = this.getSession();
+       String hql = "from Users u where u.idUser = :id";
+       Query query = this.getSession().createQuery(hql);
+       query.setInteger("idUser",id);
+       List<Users> u = query.list();
+       if(u.isEmpty()){
+           session.close();
+           return null;
+       }
+       else{
+           session.close();
+           return u.get(0);         
+       }
+   }
     
    @Override
    public Users findByEmail(String inEamil){
-
+       Session session = this.getSession();
        String hql = "from Users u where u.email = :email";
        Query query = this.getSession().createQuery(hql);
        query.setString("email",inEamil);
        List<Users> u = query.list();
-       if(u.isEmpty())
+       if(u.isEmpty()){
+           session.close();
            return null;
-       else
-           return u.get(0);
+       }
+       else{
+           session.close();
+           return u.get(0);         
+       }
    }
     
 //    @Override
@@ -48,14 +70,14 @@ public class UsersDaoImp extends BaseDaoImp<Users> implements UsersDao{
 //        }
 //   }
    
-   @Override
-   public void inscrirSession(int uId,int sessionId){
-       InscrirSession inscrir = new InscrirSession();
-       inscrir.setUserId( uId);
-       inscrir.setCourseSessionId(sessionId);
-       InscrirSessionDaoImp inscrirDao = new InscrirSessionDaoImp();
-       inscrirDao.save(inscrir);
-   }
+//   @Override
+//   public void inscrirSession(int uId,int sessionId){
+//       InscrirSession inscrir = new InscrirSession();
+//       inscrir.setUserId( uId);
+//       inscrir.setCourseSessionId(sessionId);
+//       InscrirSessionDaoImp inscrirDao = new InscrirSessionDaoImp();
+//       inscrirDao.save(inscrir);
+//   }
     
     
 }

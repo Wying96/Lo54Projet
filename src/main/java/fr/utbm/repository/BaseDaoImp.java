@@ -45,7 +45,10 @@ public class BaseDaoImp<T> implements BaseDao <T> {
     /** 
      * 获取当前工作的Session 
      */  
-    protected Session getSession() {  
+    protected Session getSession() {
+//        try{
+//            return this.sessionFactory.getCurrentSession();
+//        }catch(Exception e){}
         return this.sessionFactory.openSession();  
     }  
   
@@ -121,8 +124,11 @@ public class BaseDaoImp<T> implements BaseDao <T> {
      * @return
      */
     @Override
-    public T findById(Serializable id) {  
-        return (T) this.getSession().get(this.clazz, id);  
+    public T findById(Serializable id) {
+        Session session = this.getSession();
+        Object t = session.get(this.clazz, id);
+        session.close();
+        return (T)t;  
     }  
   
     @Override
@@ -135,11 +141,12 @@ public class BaseDaoImp<T> implements BaseDao <T> {
     
     @Override
     public List<T> findByHQL(String hql, Object... params) {  
-        Query query = this.getSession().createQuery(hql);  
+        Session session = this.getSession();
+        Query query = session.createQuery(hql);  
         for (int i = 0; params != null && i < params.length; i++) {  
             query.setParameter(i, params);  
         } 
-        
+        session.close();
         return query.list();  
     }  
 

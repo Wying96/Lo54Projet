@@ -8,6 +8,7 @@ package fr.utbm.repository;
 import fr.utbm.entity.InscrirSession;
 import java.util.List;
 import org.hibernate.Query;
+import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -17,14 +18,17 @@ import org.springframework.stereotype.Repository;
 @Repository(value = "inscrirSessionDao")
 public class InscrirSessionDaoImp extends BaseDaoImp<InscrirSession> implements InscrirSessionDao  {
     public InscrirSession findByUserAndSession(int userId,int sessionId){
-       String hql = "from InscrirSession ins "
+        Session session = this.getSession();
+        String hql = "from InscrirSession ins "
                 + "where ins.courseSessionId = :sessionId "
                + "and ins.userId= :uId";
        Query query = this.getSession().createQuery(hql);
        query.setInteger("sessionId", sessionId);
        query.setInteger("uId", userId);
-       List<InscrirSession> u = query.list();
-       return u.get(0);
+       List<InscrirSession> hasSession = query.list();
+       if(hasSession.isEmpty()){ session.close(); return null ;}
+       else{ session.close();  return hasSession.get(0); }
+       
     }
 
 
