@@ -65,9 +65,11 @@ public class testt {
 //
 //    return "location";}
      @RequestMapping(value="/")
-	public String loginPage(){
+public String loginPage(HttpServletRequest request, HttpServletResponse response){
 		return "login";
 	}
+      
+
 
     @RequestMapping(value = "/coursesession")
     public String main(HttpServletRequest request, HttpServletResponse response) {
@@ -174,7 +176,9 @@ public class testt {
         String address = request.getParameter("address");
         String email = request.getParameter("email");
         String phone = request.getParameter("phone");
-        CourseSessionService courseSessionService=new CourseSessionService();
+        boolean result=usersService.checkEmailAvalible(email);
+        if(result==true){
+            CourseSessionService courseSessionService=new CourseSessionService();
        
         Users u = new Users();
         u.setPhone(phone);
@@ -186,7 +190,15 @@ public class testt {
         usersService.save(u);
 //        request.setAttribute("userEmail", email);
         request.getSession().setAttribute("user", u);	
-        return "redirect:/";
+        return "redirect:coursesession";
+        
+        }
+        else{
+         request.getSession().setAttribute("msg", "error");
+         return "redirect:inscrire";
+         
+        }
+        
     }
 
     @RequestMapping(value = "/inscrire")
@@ -201,9 +213,9 @@ public class testt {
 
 		boolean isValidUser = usersService.checkLogin(userName, password);
 		if(!isValidUser){
-		request.setAttribute("error", "密码错误");
-
-             return "redirect:/";
+request.setAttribute("msg", "le mot de passe ou identifiant est incorrecte!");
+       
+             return "forward:/";
                 }
    
 		else{
@@ -225,4 +237,5 @@ public class testt {
 		
 		}
     }
+    
 }

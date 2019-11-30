@@ -17,7 +17,8 @@
     </head>
     <body style="text-align:center;">
         <form class="sui-form form-horizontal " action="<%=basePath%>/inscrireclient" method="post">
-             <div class="control-group">
+             ${msg}
+            <div class="control-group">
                 <label for="inputPassword" class="control-label">Address：</label>
                 <div class="controls">
                     <input type="text" name="address" >

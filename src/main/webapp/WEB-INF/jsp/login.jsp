@@ -28,7 +28,8 @@
 		<div class="modal show" id="loginModal">
     <div class="modal-dialog">
       <div class="modal-content">
-            <div class="modal-header">${error}
+            <div class="modal-header">
+               
               <button type="button" class="close">×</button>
               <h2 class="text-center text-primary">Bienvenue au Formation Ecole</h2>
                <img src="http://www.citedesmetiers.ch/var/cdmt/storage/images/media/images/fotolia_38216436_subscription_xxl/78429-1-fre-FR/Fotolia_38216436_Subscription_XXL_large.jpg" />
@@ -37,7 +38,7 @@
                  
             <form class="form col-md-12 center-block" id="loginForm" action="login" method="post">
             <div class="form-group-lg"  id="accountDiv">
-               ${null==requestScope.error?"":requestScope.error }  
+               
               <label class="sr-only" for="inputAccount">Identifiant </label>
               <div class="input-group">
                 <div class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></div>
@@ -47,6 +48,12 @@
             </div>
             <br>
             <div class="form-group-lg" id="pwdDiv">
+             
+               <div style="color:red">
+  
+ ${msg}
+</div>
+                 </c:if>
               <label class="sr-only" for="inputPassword">Mot de passe</label>
               <div class="input-group">
                 <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
