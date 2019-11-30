@@ -15,6 +15,8 @@ import fr.utbm.service.CourseService;
 import fr.utbm.service.CourseSessionService;
 import fr.utbm.service.LocationService;
 import fr.utbm.service.UsersService;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -31,6 +33,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.portlet.ModelAndView;
 
 /**
  *
@@ -61,7 +64,12 @@ public class testt {
 //        request.setAttribute("message", "Hello WU Ying! \n 测试service返回数据:");
 //
 //    return "location";}
-    @RequestMapping(value = "/")
+     @RequestMapping(value="/")
+	public String loginPage(){
+		return "login";
+	}
+
+    @RequestMapping(value = "/coursesession")
     public String main(HttpServletRequest request, HttpServletResponse response) {
 
         List<Course> coursesList = courseService.findAll();
@@ -185,5 +193,42 @@ public class testt {
     public String inscrire(HttpServletRequest request, HttpServletResponse response) {
 //     
         return "inscrire";
+    }
+    @RequestMapping(value = "/login")
+    public String validerCompte(HttpServletRequest request, HttpServletResponse response) {
+         String userName =request.getParameter("accountNo");
+		String password = request.getParameter("pwd");
+<<<<<<< Updated upstream
+		boolean isValidUser = usersService.checkLogin(userName, password);
+		if(!isValidUser){
+		request.setAttribute("error", "密码错误");
+=======
+		boolean isValidUser = false;
+		if(!isValidUser){
+		request.setAttribute("msg", "还没登录，请先登录！");
+>>>>>>> Stashed changes
+             return "redirect:/";
+                }
+   
+		else{
+<<<<<<< Updated upstream
+                    Users u=usersService.findByEmail(userName);
+=======
+>>>>>>> Stashed changes
+			  List<Course> coursesList = courseService.findAll();
+//       LocationService locationService=new LocationService();
+        List<Location> locations = locationService.findAll();
+        //Add an empty location
+        locations.add(0, new Location(null,null));
+        request.setAttribute("lists", locations);
+        request.setAttribute("coursesList", coursesList);
+<<<<<<< Updated upstream
+         request.getSession().setAttribute("user", u);
+=======
+>>>>>>> Stashed changes
+			return "coursesession";
+	
+		
+		}
     }
 }

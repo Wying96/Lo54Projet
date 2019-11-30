@@ -22,8 +22,8 @@ public class UsersDaoImp extends BaseDaoImp<Users> implements UsersDao{
     
    @Override
    public Users findByEmail(String inEamil){
-       String hql = "from Users u "
-                + "where u.email = :email";
+
+       String hql = "from Users u where u.email = :email";
        Query query = this.getSession().createQuery(hql);
        query.setString("email",inEamil);
        List<Users> u = query.list();
