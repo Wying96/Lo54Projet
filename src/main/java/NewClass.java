@@ -10,6 +10,7 @@ import fr.utbm.repository.CourseSessionDaoImp;
 import fr.utbm.repository.LocationDaoImp;
 import fr.utbm.repository.UsersDao;
 import fr.utbm.repository.UsersDaoImp;
+import fr.utbm.service.UsersService;
 import fr.utbm.tools.HibernateUtil;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -98,14 +99,26 @@ public class NewClass {
 //        }
 
 
-//        UsersDaoImp uDao = new UsersDaoImp();
-//        Users u = uDao.findById(2);
-//        
-//        for (CourseSession c : u.getInscriptions() ) {
-//            System.out.println(c.toString());
-//
-//        }
+        UsersDaoImp uDao = new UsersDaoImp();
+        Users u = uDao.findById(2);
+        
+        for (CourseSession c : u.getInscriptions() ) {
+            System.out.println(c.toString());
 
+        }
+        
+        Users u2 = new Users();
+        u2.setFirstname("44sadasda");
+        u2.setLastname("44sahdgjh");
+        u2.setPassword("44sahdgjh");
+        u2.setAddress("44sdada");
+        u2.setEmail("44sadasdad");
+        u2.setPhone("44ssdaddsds");
+
+        UsersService user=new UsersService();
+        user.save(u2);
+        
+        
         
         System.exit(0);
     }

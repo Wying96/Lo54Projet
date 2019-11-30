@@ -21,10 +21,13 @@
     </head>
     <body style="text-align:center;">
         <h1 align="center">Cours</h1>
-        <button class="sui-btn btn-success"><a href="inscrire">s'inscrire</a></button>
-        <div class="sui-container">
-
-        </div>
+         <c:if test="${empty user}"> <div class="sui-container">
+            
+        <button class="sui-btn btn-success"><a href="inscrire">s'inscrire</a></button></c:if>
+        <c:if test="${not empty user}"> <div class="sui-container">
+             <h4 align="center"> Bienvenue : ${user.email}</h4>
+        </div></c:if>
+       
         <div class="sui-container">
             <form class="sui-form form-search" action="searchMultiCondition" method="post" >
                 Part of Title: <input type="text" class="input-medium search-query" name="title">

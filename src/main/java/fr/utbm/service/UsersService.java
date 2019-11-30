@@ -24,14 +24,15 @@ import org.springframework.stereotype.Service;
 public class UsersService {
     @Resource(name="usersDao")
     public UsersDao usersDao;
+
     public Users findById(int id){
-//        UsersDaoImp usersDao = new UsersDaoImp();
+//       UsersDaoImp usersDao = new UsersDaoImp();
         return usersDao.findById(id);
     }
     
-    public void save(Users u){
-       
-        usersDao.save(u);
+    public void save(Users user){
+//       UsersDaoImp userDap=new UsersDaoImp();
+        usersDao.save(user);
     }
     
 //    public List<Users> findBy2SessionTime(Date startDate, Date endDate){

@@ -160,45 +160,30 @@ public class testt {
     @RequestMapping(value = "/inscrireclient")
     public String inscrireClient(HttpServletRequest request, HttpServletResponse response) {
 //      Integer id=Integer.parseInt(request.getParameter("coursesessionid"));
+        String pwd = request.getParameter("password");
         String lastname = request.getParameter("lastname");
         String firstname = request.getParameter("firstname");
         String address = request.getParameter("address");
         String email = request.getParameter("email");
         String phone = request.getParameter("phone");
-//        CourseSessionService courseSessionService=new CourseSessionService();
-        CourseSession cs = new CourseSession();
-//        cs=courseSessionService.findById(id);
-        //      ClientService clientservice=new ClientService();
-        Client client = new Client();
-        client.setPhone(phone);
-        client.setAddress(address);
-        client.setCourseSessionId(cs);
-        client.setFirstname(firstname);
-        client.setEmail(email);
-        client.setLastname(lastname);
-        clientService.save(client);
-        return "inscrire";
-    }
-
-    @RequestMapping(value = "/inscrire")
-    public String inscrire(HttpServletRequest request, HttpServletResponse response) {
-//      Integer id=Integer.parseInt(request.getParameter("coursesessionid"));
-        String lastname = request.getParameter("lastname");
-        String firstname = request.getParameter("firstname");
-        String address = request.getParameter("address");
-        String email = request.getParameter("email");
-        String phone = request.getParameter("phone");
-//        CourseSessionService courseSessionService=new CourseSessionService();
-       // CourseSession cs = new CourseSession();
-//        cs=courseSessionService.findById(id);
-        //      ClientService clientservice=new ClientService();
+        CourseSessionService courseSessionService=new CourseSessionService();
+       
         Users u = new Users();
         u.setPhone(phone);
         u.setAddress(address);
         u.setFirstname(firstname);
         u.setEmail(email);
         u.setLastname(lastname);
+        u.setPassword(pwd);
         usersService.save(u);
+//        request.setAttribute("userEmail", email);
+        request.getSession().setAttribute("user", u);	
+        return "redirect:/";
+    }
+
+    @RequestMapping(value = "/inscrire")
+    public String inscrire(HttpServletRequest request, HttpServletResponse response) {
+//     
         return "inscrire";
     }
 }

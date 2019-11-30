@@ -5,6 +5,10 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -12,8 +16,7 @@
         <title>Register Formation Ecole</title>
     </head>
     <body style="text-align:center;">
-        <form class="sui-form form-horizontal " action="inscrire" method="post">
-            <input type="hidden" value="${course}" id="coursesessionid" name="coursesessionid"/>
+        <form class="sui-form form-horizontal " action="<%=basePath%>/inscrireclient" method="post">
              <div class="control-group">
                 <label for="inputPassword" class="control-label">Address：</label>
                 <div class="controls">
@@ -23,7 +26,7 @@
               <div class="control-group"  >
                 <label for="inputuserName" class="control-label">Password：</label>
                 <div class="controls" >
-                    <input type="password" name="lastname" >
+                    <input type="password" name="password" >
                 </div>
             </div>
             <div class="control-group"  >
