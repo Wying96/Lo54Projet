@@ -28,10 +28,9 @@ public class UsersDaoImp extends BaseDaoImp<Users> implements UsersDao{
        query.setString("email",inEamil);
        List<Users> u = query.list();
        if(u.isEmpty())
-            return null;
-          
+           return null;
        else
-            return u.get(0);
+           return u.get(0);
    }
     
 //    @Override

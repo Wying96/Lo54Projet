@@ -97,8 +97,6 @@ public class NewClass {
 //            System.out.println(c.toString());
 //
 //        }
-
-
 //        UsersDaoImp uDao = new UsersDaoImp();
 //        Users u = uDao.findById(2);
 //        
@@ -114,35 +112,35 @@ public class NewClass {
 //        u2.setAddress("44sdada");
 //        u2.setEmail("44sadasdad");
 //        u2.setPhone("44ssdaddsds");
+        UsersService user = new UsersService();
+//        if (user.checkLogin("eeeee@eeee.fr", "123456")) {
+//
+//            System.out.println("yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
+//        } else {
+//            System.out.println("shibai l ");
+//        };
+        System.out.println("错误的账户： ");
+        if (user.checkLogin("eeeee@eeee.com", "123456")) {
 
-        UsersService user=new UsersService();
-        if(user.checkLogin("eeeee@eeee.fr", "123456"))
-        {
-            
-        System.out.println("yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
-        }
-        else{
-        System.out.println("shibai l ");
+            System.out.println("yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
+        } else {
+            System.out.println("搞错了！！！");
         };
-        
-        user.inscrirSession(14, 1);
-        
-        user.inscrirSession(14, 2);
-        
-        user.inscrirSession(14, 3);
-        
-        user.inscrirSession(14, 4);
-        
+//
+//        user.inscrirSession(14, 1);
+//
+//        user.inscrirSession(14, 2);
+//
+//        user.inscrirSession(14, 3);
+//
+//        user.inscrirSession(14, 4);
+
 //        
 //        UsersDaoImp usersImp = new UsersDaoImp();
 //        Users lcs2 = usersImp.findByEmail("eeeee@eeee.fr");
 //            System.out.println(lcs2.toString());
-
-    
 //        Users lcs2 = usersImp.findByEmail("eeeee@eeee.fr");
 //            System.out.println(lcs2.toString());
-        
-        
         System.exit(0);
     }
 }
