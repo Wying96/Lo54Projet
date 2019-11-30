@@ -35,33 +35,26 @@ public class UsersService {
         usersDao.save(user);
     }
     
-//    public List<Users> findBy2SessionTime(Date startDate, Date endDate){
-////        UsersDaoImp usersDao =new UsersDaoImp();
-//        return usersDao.findBy2SessionTime(startDate, endDate);
-//    }
-//    
-//    public List<Users> findBySessionLocation(Location location){
-////        UsersDaoImp usersDao=new UsersDaoImp();
-//        return usersDao.findBySessionLocation(location);
-//    }
-//    
-//    public void save(Users course){
-////        UsersDaoImp usersDao = new UsersDaoImp();
-//        usersDao.save(course);
-//    }
-//    
-//    public void update (Users course){
-////        UsersDaoImp usersDao = new UsersDaoImp();
-//        usersDao.update(course);
-//    }
-//    
-//    public void delete(Serializable id){
-////        UsersDaoImp usersDao = new UsersDaoImp();
-//        usersDao.delete(id);
-//    }
-//    
-//    public Users findById(Serializable id){
-////        UsersDaoImp usersDao = new UsersDaoImp();
-//        return usersDao.findById(id);       
-//    }
+   public boolean checkEmailAvalible(String inEamil){
+       // true--> can register
+       //false --> can't create new user
+       return usersDao.findByEmail(inEamil) == null;
+   }
+   
+   public boolean checkLogin(String inEmail, String inPwd){
+       Users u = usersDao.findByEmail(inEmail);
+       if(u!=null){
+            if(u.getPassword().equals(inPwd))
+                return true;
+            return false;
+       }
+       else{
+           return false;
+       }
+   }
+   
+    
+    
+    
+    
 }
