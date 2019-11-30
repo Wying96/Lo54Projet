@@ -198,23 +198,18 @@ public class testt {
     public String validerCompte(HttpServletRequest request, HttpServletResponse response) {
          String userName =request.getParameter("accountNo");
 		String password = request.getParameter("pwd");
-<<<<<<< Updated upstream
+
 		boolean isValidUser = usersService.checkLogin(userName, password);
 		if(!isValidUser){
 		request.setAttribute("error", "密码错误");
-=======
-		boolean isValidUser = false;
-		if(!isValidUser){
-		request.setAttribute("msg", "还没登录，请先登录！");
->>>>>>> Stashed changes
+
              return "redirect:/";
                 }
    
 		else{
-<<<<<<< Updated upstream
+
                     Users u=usersService.findByEmail(userName);
-=======
->>>>>>> Stashed changes
+
 			  List<Course> coursesList = courseService.findAll();
 //       LocationService locationService=new LocationService();
         List<Location> locations = locationService.findAll();
@@ -222,10 +217,9 @@ public class testt {
         locations.add(0, new Location(null,null));
         request.setAttribute("lists", locations);
         request.setAttribute("coursesList", coursesList);
-<<<<<<< Updated upstream
+
          request.getSession().setAttribute("user", u);
-=======
->>>>>>> Stashed changes
+
 			return "coursesession";
 	
 		

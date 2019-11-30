@@ -72,6 +72,9 @@ public class UsersService {
             return false;
         }
     }
+    public Users findByEmail(String email){
+    return usersDao.findByEmail(email);
+    }
 
     
 }
