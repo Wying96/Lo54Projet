@@ -6,7 +6,6 @@
 package fr.utbm.entity;
 
 
-import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.*;
 
@@ -17,7 +16,6 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "CLIENT")
-
 public class Client{
 
     @Id
