@@ -27,7 +27,10 @@ public class UsersDaoImp extends BaseDaoImp<Users> implements UsersDao{
        Query query = this.getSession().createQuery(hql);
        query.setString("email",inEamil);
        List<Users> u = query.list();
-       return u.get(0);
+       if(u!=null)
+           return u.get(0);
+       else
+           return null;
    }
     
 //    @Override
