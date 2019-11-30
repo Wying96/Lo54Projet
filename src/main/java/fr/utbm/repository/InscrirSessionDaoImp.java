@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
 @Repository(value = "inscrirSessionDao")
 public class InscrirSessionDaoImp extends BaseDaoImp<InscrirSession> implements InscrirSessionDao  {
     public InscrirSession findByUserAndSession(int userId,int sessionId){
-       String hql = "from InscrirSession ins"
+       String hql = "from InscrirSession ins "
                 + "where ins.courseSessionId = :sessionId "
                + "and ins.userId= :uId";
        Query query = this.getSession().createQuery(hql);

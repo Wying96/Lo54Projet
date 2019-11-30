@@ -124,6 +124,15 @@ public class NewClass {
         else{
         System.out.println("shibai l ");
         };
+        
+        user.inscrirSession(14, 1);
+        
+        user.inscrirSession(14, 2);
+        
+        user.inscrirSession(14, 3);
+        
+        user.inscrirSession(14, 4);
+        
 //        
 //        UsersDaoImp usersImp = new UsersDaoImp();
 //        Users lcs2 = usersImp.findByEmail("eeeee@eeee.fr");
