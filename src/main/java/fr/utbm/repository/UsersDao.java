@@ -17,7 +17,7 @@ public interface UsersDao extends BaseDao<Users> {
 //   public boolean checkEmailExistence(String eamil); 
    public Users findByEmail(String email);
 //   public boolean checkLogin(Users u);
-   public boolean inscrirSession(int uId,int sessionId);
+   public void inscrirSession(int uId,int sessionId);
    
     
 }

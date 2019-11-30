@@ -99,25 +99,39 @@ public class NewClass {
 //        }
 
 
-        UsersDaoImp uDao = new UsersDaoImp();
-        Users u = uDao.findById(2);
-        
-        for (CourseSession c : u.getInscriptions() ) {
-            System.out.println(c.toString());
-
-        }
-        
-        Users u2 = new Users();
-        u2.setFirstname("44sadasda");
-        u2.setLastname("44sahdgjh");
-        u2.setPassword("44sahdgjh");
-        u2.setAddress("44sdada");
-        u2.setEmail("44sadasdad");
-        u2.setPhone("44ssdaddsds");
+//        UsersDaoImp uDao = new UsersDaoImp();
+//        Users u = uDao.findById(2);
+//        
+//        for (CourseSession c : u.getInscriptions() ) {
+//            System.out.println(c.toString());
+//
+//        }
+//        
+//        Users u2 = new Users();
+//        u2.setFirstname("44sadasda");
+//        u2.setLastname("44sahdgjh");
+//        u2.setPassword("44sahdgjh");
+//        u2.setAddress("44sdada");
+//        u2.setEmail("44sadasdad");
+//        u2.setPhone("44ssdaddsds");
 
         UsersService user=new UsersService();
-        user.save(u2);
-        
+        if(user.checkLogin("eeeee@eeee.fr", "123456"))
+        {
+            
+        System.out.println("yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
+        }
+        else{
+        System.out.println("shibai l ");
+        };
+//        
+//        UsersDaoImp usersImp = new UsersDaoImp();
+//        Users lcs2 = usersImp.findByEmail("eeeee@eeee.fr");
+//            System.out.println(lcs2.toString());
+
+    
+//        Users lcs2 = usersImp.findByEmail("eeeee@eeee.fr");
+//            System.out.println(lcs2.toString());
         
         
         System.exit(0);

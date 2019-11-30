@@ -22,7 +22,7 @@ public class UsersDaoImp extends BaseDaoImp<Users> implements UsersDao{
     
    @Override
    public Users findByEmail(String inEamil){
-       String hql = "from Users u"
+       String hql = "from Users u "
                 + "where u.email = :email";
        Query query = this.getSession().createQuery(hql);
        query.setString("email",inEamil);
@@ -46,18 +46,12 @@ public class UsersDaoImp extends BaseDaoImp<Users> implements UsersDao{
 //   }
    
    @Override
-   public boolean inscrirSession(int uId,int sessionId){
+   public void inscrirSession(int uId,int sessionId){
        InscrirSession inscrir = new InscrirSession();
        inscrir.setUserId( uId);
        inscrir.setCourseSessionId(sessionId);
        InscrirSessionDaoImp inscrirDao = new InscrirSessionDaoImp();
-       if(inscrirDao.findByUserAndSession(uId, sessionId)!=null){
-          return false;
-       }//如果已经注册过这个课程则无法注册
-       else{
-           inscrirDao.save(inscrir);
-           return true;
-       }
+       inscrirDao.save(inscrir);
    }
     
     

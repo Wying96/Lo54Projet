@@ -12,5 +12,5 @@ import fr.utbm.entity.InscrirSession;
  * @author c
  */
 public interface InscrirSessionDao extends BaseDao<InscrirSession> {
-    
+    public InscrirSession findByUserAndSession(int userId,int sessionId);
 }

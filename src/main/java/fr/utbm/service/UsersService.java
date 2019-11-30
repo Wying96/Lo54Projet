@@ -24,6 +24,9 @@ import org.springframework.stereotype.Service;
 public class UsersService {
     @Resource(name="usersDao")
     public UsersDao usersDao;
+    
+//    @Resource(name="inscrirSessionDao")
+//    public InscrirSessionDao inscrirSessionDao;
 
     public Users findById(int id){
 //       UsersDaoImp usersDao = new UsersDaoImp();
@@ -42,16 +45,24 @@ public class UsersService {
    }
    
    public boolean checkLogin(String inEmail, String inPwd){
-       Users u = usersDao.findByEmail(inEmail);
+       UsersDaoImp usersImp = new UsersDaoImp();
+       Users u = usersImp.findByEmail(inEmail);
        if(u!=null){
-            if(u.getPassword().equals(inPwd))
-                return true;
-            return false;
+            return ( u.getPassword().equals(inPwd));
        }
        else{
            return false;
        }
    }
+   
+//   public boolean inscrirSession(int uId,int sessionId){
+//       if(){
+//            return u.getPassword().equals(inPwd);
+//       }
+//       else{
+//           return false;
+//       }
+//   }
    
     
     
