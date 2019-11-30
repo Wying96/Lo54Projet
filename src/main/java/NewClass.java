@@ -1,10 +1,15 @@
 
 import fr.utbm.entity.Course;
 import fr.utbm.entity.Location;
+import fr.utbm.entity.Users;
+import fr.utbm.entity.CourseSession;
+
 import fr.utbm.repository.BaseDao;
 import fr.utbm.repository.CourseDaoImp;
 import fr.utbm.repository.CourseSessionDaoImp;
 import fr.utbm.repository.LocationDaoImp;
+import fr.utbm.repository.UsersDao;
+import fr.utbm.repository.UsersDaoImp;
 import fr.utbm.tools.HibernateUtil;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -71,28 +76,36 @@ public class NewClass {
 //    
 //}
 //测试按照一个时间搜课程
-        CourseDaoImp lp2 = new CourseDaoImp();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date dateDispon = new Date();
-        try {
-            dateDispon = sdf.parse("2019-11-10"); // 之後要看 controller 層傳入的數據了
-        } catch (ParseException ex) {
-            Logger.getLogger(NewClass.class.getName()).log(Level.SEVERE, null, ex);
-        }
-//        List<Course> lcs = lp2.findByOneDayDispon(dateDispon);
-//        for (Course c : lcs) {
+//        CourseDaoImp lp2 = new CourseDaoImp();
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//        Date dateDispon = new Date();
+//        try {
+//            dateDispon = sdf.parse("2019-11-10"); // 之後要看 controller 層傳入的數據了
+//        } catch (ParseException ex) {
+//            Logger.getLogger(NewClass.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+////        List<Course> lcs = lp2.findByOneDayDispon(dateDispon);
+////        for (Course c : lcs) {
+////            System.out.println(c.toString());
+////
+////        }
+//        
+//        
+//        List<Course> lcs2 = lp2.findByMultiCcondition("a", null, null, null);
+//        for (Course c : lcs2) {
 //            System.out.println(c.toString());
 //
 //        }
-        
-        
-        List<Course> lcs2 = lp2.findByMultiCcondition("a", null, null, null);
-        for (Course c : lcs2) {
-            System.out.println(c.toString());
 
-        }
 
-        
+//        UsersDaoImp uDao = new UsersDaoImp();
+//        Users u = uDao.findById(2);
+//        
+//        for (CourseSession c : u.getInscriptions() ) {
+//            System.out.println(c.toString());
+//
+//        }
+
         
         System.exit(0);
     }

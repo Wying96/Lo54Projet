@@ -7,6 +7,7 @@
     <class>fr.utbm.entity.Course</class>
     <class>fr.utbm.entity.CourseSession</class>
     <class>fr.utbm.entity.Client</class>
+    <class>fr.utbm.entity.InscrirSession</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/FormationEcole"/>

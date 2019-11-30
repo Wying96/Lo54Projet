@@ -6,18 +6,25 @@
 package fr.utbm.entity;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -25,36 +32,57 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "USERS")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Users.findAll", query = "SELECT u FROM Users u")})
 public class Users implements Serializable {
 
-    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "ID_USER")
     private Integer idUser;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 20)
-    @Column(name = "NAME")
-    private String name;
-    @Size(max = 20)
-    @Column(name = "TOTO")
-    private String toto;
-
+    @Column(name = "LASTNAME")
+    private String lastname;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "FIRSTNAME")
+    private String firstname;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(name = "ADDRESS")
+    private String address;
+    // @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$", message="Invalid phone/fax format, should be as xxx-xxx-xxxx")//if the field contains phone or fax number consider using this annotation to enforce field validation
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(name = "PHONE")
+    private String phone;
+    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(name = "EMAIL")
+    private String email;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 256)
+    @Column(name = "PASSWORD")
+    private String password;
+    
+    
+    @ManyToMany(cascade=CascadeType.ALL)
+    @JoinTable(name="INSCRIRSESSION", 
+               joinColumns= @JoinColumn(name="USER_ID",referencedColumnName="ID_USER"),
+               inverseJoinColumns=@JoinColumn(name="COURSE_SESSION_ID",referencedColumnName="ID"))  
+    private Collection<CourseSession> inscriptions;
+    
+    
+    
     public Users() {
     }
 
     public Users(Integer idUser) {
         this.idUser = idUser;
-    }
-
-    public Users(Integer idUser, String name) {
-        this.idUser = idUser;
-        this.name = name;
     }
 
     public Integer getIdUser() {
@@ -65,20 +93,67 @@ public class Users implements Serializable {
         this.idUser = idUser;
     }
 
-    public String getName() {
-        return name;
+    public String getLastname() {
+        return lastname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 
-    public String getToto() {
-        return toto;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setToto(String toto) {
-        this.toto = toto;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Collection<CourseSession> getInscriptions() {
+        return inscriptions;
+    }
+
+    public void setInscriptions(Collection<CourseSession> inscriptions) {
+        this.inscriptions = inscriptions;
+    }
+
+    @Override
+    public String toString() {
+        return "Users{" + "idUser=" + idUser + ", lastname=" + lastname + ","
+                + " firstname=" + firstname + ", address=" + address + ", "
+                + "phone=" + phone + ", email=" + email + "}";
     }
 
     @Override
@@ -101,9 +176,6 @@ public class Users implements Serializable {
         return true;
     }
 
-    @Override
-    public String toString() {
-        return "fr.utbm.entity.Users[ idUser=" + idUser + " ]";
-    }
-    
+ 
+        
 }

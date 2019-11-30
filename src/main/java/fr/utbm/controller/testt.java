@@ -9,10 +9,12 @@ import fr.utbm.entity.Client;
 import fr.utbm.entity.Course;
 import fr.utbm.entity.CourseSession;
 import fr.utbm.entity.Location;
+import fr.utbm.entity.Users;
 import fr.utbm.service.ClientService;
 import fr.utbm.service.CourseService;
 import fr.utbm.service.CourseSessionService;
 import fr.utbm.service.LocationService;
+import fr.utbm.service.UsersService;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -47,6 +49,8 @@ public class testt {
     public CourseSessionService courseSessionService;
     @Autowired
     public ClientService clientService;
+    @Autowired
+    public UsersService usersService;
 
 //     @RequestMapping(value="/fuck") //用于配制url路径
 //     public String main(HttpServletRequest request,HttpServletResponse response){
@@ -179,7 +183,22 @@ public class testt {
     @RequestMapping(value = "/inscrire")
     public String inscrire(HttpServletRequest request, HttpServletResponse response) {
 //      Integer id=Integer.parseInt(request.getParameter("coursesessionid"));
-
+        String lastname = request.getParameter("lastname");
+        String firstname = request.getParameter("firstname");
+        String address = request.getParameter("address");
+        String email = request.getParameter("email");
+        String phone = request.getParameter("phone");
+//        CourseSessionService courseSessionService=new CourseSessionService();
+       // CourseSession cs = new CourseSession();
+//        cs=courseSessionService.findById(id);
+        //      ClientService clientservice=new ClientService();
+        Users u = new Users();
+        u.setPhone(phone);
+        u.setAddress(address);
+        u.setFirstname(firstname);
+        u.setEmail(email);
+        u.setLastname(lastname);
+        usersService.save(u);
         return "inscrire";
     }
 }

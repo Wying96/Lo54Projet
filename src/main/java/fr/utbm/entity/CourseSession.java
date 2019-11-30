@@ -19,6 +19,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -67,6 +68,14 @@ public class CourseSession {
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "courseSessionId")
     private Collection<Client> clientCollection;
+    
+    
+    @ManyToMany(cascade=CascadeType.ALL)
+    @JoinTable(name="INSCRIRSESSION", 
+               joinColumns= @JoinColumn(name="COURSE_SESSION_ID",referencedColumnName="ID"),
+               inverseJoinColumns=@JoinColumn(name="USER_ID",referencedColumnName="ID_USER"))  
+    private Collection<Users> students;
+    
 
     public CourseSession() {
     }
