@@ -16,6 +16,7 @@ import fr.utbm.tools.HibernateUtil;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -107,13 +108,15 @@ public class NewClass {
 //
 //        }
 //        
-//        Users u2 = new Users();
-//        u2.setFirstname("44sadasda");
-//        u2.setLastname("44sahdgjh");
-//        u2.setPassword("44sahdgjh");
-//        u2.setAddress("44sdada");
-//        u2.setEmail("44sadasdad");
-////        u2.setPhone("44ssdaddsds");
+        Users u2 = new Users();
+        u2.setFirstname("1111111");
+        u2.setLastname("44sahdgjh");
+        u2.setPassword("44sahdgjh");
+        u2.setAddress("44sdada");
+        u2.setEmail("111111111");
+        u2.setPhone("1111111111");
+        
+//        u2.setPhone("44ssdaddsds");
 //        UsersService user = new UsersService();
 ////        if (user.checkLogin("eeeee@eeee.fr", "123456")) {
 ////
@@ -160,11 +163,45 @@ public class NewClass {
 //            }
 //        }
         
-       CourseSessionDaoImp csDao = new CourseSessionDaoImp();
-       CourseSession cs = csDao.findById(1);
-       System.out.println(cs.toString());
+//       CourseSessionDaoImp csDao = new CourseSessionDaoImp();
+//       CourseSession cs =(CourseSession) csDao.findById((Serializable)2);
+//       System.out.println(cs.toString());
+
+
 //        
-//        UsersDaoImp usersImp = new UsersDaoImp();
+        UsersDaoImp uDao = new UsersDaoImp();
+        Users u = uDao.findById(11);
+        
+        uDao.save(u2);
+        
+//        CourseSessionDaoImp csDao = new CourseSessionDaoImp();
+//        CourseSession e2 = csDao.findById(2);
+//        CourseSession e3 = csDao.findById(3);
+//        ArrayList<CourseSession> lcs = new ArrayList<CourseSession>(2);
+//        lcs.add(e2);
+//        lcs.add(e3);
+//        
+//        u.setCourseSessionCollection(lcs);
+//        uDao.update(u);
+//        
+//        Users u2 = uDao.findById(11);
+//        if(u2!=null)
+//        {
+//            System.out.println(u2.toString());
+//            
+//            System.out.println("u2人的课程有： ");
+//            for(CourseSession cs: u2.getCourseSessionCollection()){
+//                System.out.println(cs.toString());
+//            }
+//        }
+
+
+
+//        
+//        for(CourseSession cs: lcs){
+//            
+//        }
+
 //        Users lcs2 = usersImp.findByEmail("eeeee@eeee.fr");
 //            System.out.println(lcs2.toString());
 //        Users lcs2 = usersImp.findByEmail("eeeee@eeee.fr");

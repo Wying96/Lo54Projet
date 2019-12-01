@@ -17,7 +17,7 @@ public interface UsersDao extends BaseDao<Users> {
     
 //   public boolean checkEmailExistence(String eamil); 
     public void save(Users u);
-    public void update(Users u);
+    public void update(Users u) ;
     public void delete(Users u);
    public Users findById(Integer id);
    public Users findByEmail(String email);

@@ -23,6 +23,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.hibernate.Session;
 import static org.hibernate.type.TypeFactory.serializable;
+import fr.utbm.repository.CourseSessionDao;
 
 
 /**
@@ -104,7 +105,7 @@ public class CourseSessionDaoImp extends BaseDaoImp<CourseSession>
         try {
             session = this.getSession();
             session.getTransaction().begin();
-            CourseSession persistentCourseSession = (CourseSession) session.load(CourseSession.class, (Serializable)courseSession.getId());
+            CourseSession persistentCourseSession = (CourseSession) session.get(CourseSession.class, (Serializable)courseSession.getId());
             Location locationIdOld = persistentCourseSession.getLocationId();
             Location locationIdNew = courseSession.getLocationId();
             Course courseIdOld = persistentCourseSession.getCourseId();
