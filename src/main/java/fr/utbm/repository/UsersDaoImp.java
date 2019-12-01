@@ -6,7 +6,6 @@
 package fr.utbm.repository;
 
 import fr.utbm.entity.CourseSession;
-import fr.utbm.entity.InscrirSession;
 import fr.utbm.entity.Users;
 import java.io.Serializable;
 import static java.util.Collections.list;
@@ -23,6 +22,19 @@ import org.springframework.stereotype.Repository;
 @Repository(value = "usersDao")
 public class UsersDaoImp extends BaseDaoImp<Users> implements UsersDao {
 
+    @Override
+    public void save(Users u){
+    
+    }
+    
+    public void update(Users u){
+    
+    }
+    
+    public void delete(Users u){
+    
+    }
+    
     @Override
     public Users findById(Integer id) {
         Session session = this.getSession();
@@ -55,49 +67,9 @@ public class UsersDaoImp extends BaseDaoImp<Users> implements UsersDao {
         }
     }
 
-//    @Override
-//   public boolean checkEmailExistence(String inEamil){
-//       return this.findByEmail(inEamil) != null;
-//   }
-//   @Override
-//   public boolean checkLogin(String inEmail, String inPwd){
-//        if(this.findByEmail(inEmail)==null){
-//            
-//        }
-//        else{
-//            return false;
-//        }
-//   }
     @Override
     public void inscrirSession(int uId, CourseSession cs) {
-//       InscrirSession inscrir = new InscrirSession();
-//       inscrir.setUserId( uId);
-//       inscrir.setCourseSessionId(sessionId);
-//       InscrirSessionDaoImp inscrirDao = new InscrirSessionDaoImp();
-//       inscrirDao.save(inscrir);
-        Session session = this.getSession();
-
-        try {
-            Users u = this.findById(uId);
-            //TODO: use annotation
-//            CourseSessionDaoImp csDao = new CourseSessionDaoImp();
-//            CourseSession cs = csDao.findById((Serializable) uId);
-            u.getInscriptions().add(cs);
-            session.update(u);
-        } catch (HibernateException he) {
-            he.printStackTrace();
-            if (session.getTransaction() != null) {
-                try {
-                    session.getTransaction().rollback();
-                    session.close();
-                } catch (HibernateException heRollback) {
-                    heRollback.printStackTrace();
-                }
-            }
-        } finally {
-            session.getTransaction().commit();
-            session.close();
-        }
+        
     }
 
 }

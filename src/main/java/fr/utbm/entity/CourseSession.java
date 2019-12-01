@@ -38,7 +38,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "COURSE_SESSION")
 //    @NamedQuery(name = "CourseSession.findAll", query = "SELECT c FROM CourseSession c")})
-public class CourseSession {
+public class CourseSession implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -69,12 +69,19 @@ public class CourseSession {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "courseSessionId")
     private Collection<Client> clientCollection;
     
-    
-    @ManyToMany(cascade=CascadeType.ALL)
-    @JoinTable(name="INSCRIRSESSION", 
-               joinColumns= @JoinColumn(name="COURSE_SESSION_ID",referencedColumnName="ID"),
-               inverseJoinColumns=@JoinColumn(name="USER_ID",referencedColumnName="ID_USER"))  
-    private Collection<Users> students;
+    @JoinTable(name = "INSCRIRSESSION", joinColumns = {
+        @JoinColumn(name = "COURSE_SESSION_ID", referencedColumnName = "ID")}, inverseJoinColumns = {
+        @JoinColumn(name = "USER_ID", referencedColumnName = "ID_USER")})
+    @ManyToMany
+    private Collection<Users> usersCollection;
+
+    public Collection<Users> getUsersCollection() {
+        return usersCollection;
+    }
+
+    public void setUsersCollection(Collection<Users> usersCollection) {
+        this.usersCollection = usersCollection;
+    }
     
 
     public CourseSession() {

@@ -6,12 +6,9 @@
 package fr.utbm.service;
 
 import fr.utbm.entity.CourseSession;
-import fr.utbm.entity.InscrirSession;
 import fr.utbm.entity.Users;
 import fr.utbm.entity.Location;
 import fr.utbm.repository.CourseSessionDaoImp;
-import fr.utbm.repository.InscrirSessionDao;
-import fr.utbm.repository.InscrirSessionDaoImp;
 import fr.utbm.repository.UsersDao;
 import fr.utbm.repository.UsersDaoImp;
 import fr.utbm.repository.LocationDaoImp;
@@ -32,8 +29,6 @@ public class UsersService {
     @Resource(name = "usersDao")
     public UsersDao usersDao;
 
-    @Resource(name = "inscrirSessionDao")
-    public InscrirSessionDao inscrirSessionDao;
 
     public Users findById(int id) {
        UsersDaoImp uDao = new UsersDaoImp();
@@ -63,25 +58,7 @@ public class UsersService {
     }
 
     public boolean inscrirSession(int uId, int sessionId) {
-        InscrirSessionDaoImp inscrir = new InscrirSessionDaoImp();
-      //       inscrirSessionDao.
-        UsersDaoImp uDao = new UsersDaoImp();
-      if (inscrir.findByUserAndSession(uId, sessionId) == null) {
-          CourseSessionDaoImp csDao = new CourseSessionDaoImp();
-          CourseSession cs = csDao.findById((Serializable) sessionId);
-          uDao.inscrirSession(uId, cs);
-//            try {
-//                InscrirSession inscri = new InscrirSession();
-//                inscri.setUserId(uId);
-//                inscri.setCourseSessionId(sessionId);
-//                inscrir.save(inscri);
-//            } catch (Exception e) {
-//            } finally {
-                return true;
-//            }
-        } else {
-            return false;
-        }
+      return true;
     }
     
     public Users findByEmail(String email){

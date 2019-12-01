@@ -69,14 +69,9 @@ public class Users implements Serializable {
     @Column(name = "PASSWORD")
     private String password;
     
-    
-    @ManyToMany(cascade=CascadeType.ALL)
-    @JoinTable(name="INSCRIRSESSION", 
-               joinColumns= @JoinColumn(name="USER_ID",referencedColumnName="ID_USER"),
-               inverseJoinColumns=@JoinColumn(name="COURSE_SESSION_ID",referencedColumnName="ID"))  
-    private Collection<CourseSession> inscriptions;
-    
-    
+
+    @ManyToMany(mappedBy = "usersCollection")
+    private Collection<CourseSession> courseSessionCollection;
     
     public Users() {
     }
@@ -141,12 +136,12 @@ public class Users implements Serializable {
         this.password = password;
     }
 
-    public Collection<CourseSession> getInscriptions() {
-        return inscriptions;
+    public Collection<CourseSession> getCourseSessionCollection() {
+        return courseSessionCollection;
     }
 
-    public void setInscriptions(Collection<CourseSession> inscriptions) {
-        this.inscriptions = inscriptions;
+    public void setCourseSessionCollection(Collection<CourseSession> courseSessionCollection) {
+        this.courseSessionCollection = courseSessionCollection;
     }
 
     @Override

@@ -12,5 +12,8 @@ import fr.utbm.entity.CourseSession;
  * @author wuying
  */
 public interface CourseSessionDao extends BaseDao<CourseSession> {
+    public void save(CourseSession cs);
+    public void update(CourseSession cs);
+    public void delete(CourseSession cs);
     
 }

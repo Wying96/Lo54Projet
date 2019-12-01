@@ -113,58 +113,56 @@ public class NewClass {
 //        u2.setPassword("44sahdgjh");
 //        u2.setAddress("44sdada");
 //        u2.setEmail("44sadasdad");
-//        u2.setPhone("44ssdaddsds");
-        UsersService user = new UsersService();
-//        if (user.checkLogin("eeeee@eeee.fr", "123456")) {
+////        u2.setPhone("44ssdaddsds");
+//        UsersService user = new UsersService();
+////        if (user.checkLogin("eeeee@eeee.fr", "123456")) {
+////
+////            System.out.println("yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
+////        } else {
+////            System.out.println("shibai l ");
+////        };
+////        System.out.println("错误的账户： ");
+////        if (user.checkLogin("eeeee@eeee.com", "123456")) {
+////
+////            System.out.println("yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
+////        } else {
+////            System.out.println("搞错了！！！");
+////        };
+////
+//        user.inscrirSession(11, 1);
 //
-//            System.out.println("yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
-//        } else {
-//            System.out.println("shibai l ");
-//        };
-//        System.out.println("错误的账户： ");
-//        if (user.checkLogin("eeeee@eeee.com", "123456")) {
+//        user.inscrirSession(11, 2);
 //
-//            System.out.println("yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
-//        } else {
-//            System.out.println("搞错了！！！");
-//        };
+//        user.inscrirSession(11, 3);
 //
-        user.inscrirSession(11, 1);
-
-        user.inscrirSession(11, 2);
-
-        user.inscrirSession(11, 3);
-
-        user.inscrirSession(11, 4);
+//        user.inscrirSession(11, 4);
+//        
+////        Users u = user.findByEmail("wuyu");
+//        
+//        Users u = user.findById(11);
+//        if(u!=null)
+//        {
+//            System.out.println(u.toString());
+//            
+//            System.out.println("这个人的课程有： ");
+//        }
+//        
+//        
+//        System.out.println("-----------------------------------------------------------------------------------");
+//        Users u2 = user.findByEmail("eeeee@eeee.fr");
+//        if(u2!=null)
+//        {
+//            System.out.println(u2.toString());
+//            
+//            System.out.println("u2人的课程有： ");
+//            for(CourseSession cs: u2.){
+//                System.out.println(cs.toString());
+//            }
+//        }
         
-//        Users u = user.findByEmail("wuyu");
-        
-        Users u = user.findById(11);
-        if(u!=null)
-        {
-            System.out.println(u.toString());
-            
-            System.out.println("这个人的课程有： ");
-            for(CourseSession cs: u.getInscriptions()){
-                System.out.println(cs.toString());
-            }
-        }
-        
-        
-        System.out.println("-----------------------------------------------------------------------------------");
-        Users u2 = user.findByEmail("eeeee@eeee.fr");
-        if(u2!=null)
-        {
-            System.out.println(u2.toString());
-            
-            System.out.println("u2人的课程有： ");
-            for(CourseSession cs: u2.getInscriptions()){
-                System.out.println(cs.toString());
-            }
-        }
-        
-        
- 
+       CourseSessionDaoImp csDao = new CourseSessionDaoImp();
+       CourseSession cs = csDao.findById(1);
+       System.out.println(cs.toString());
 //        
 //        UsersDaoImp usersImp = new UsersDaoImp();
 //        Users lcs2 = usersImp.findByEmail("eeeee@eeee.fr");
