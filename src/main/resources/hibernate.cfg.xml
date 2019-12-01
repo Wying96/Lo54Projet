@@ -43,8 +43,8 @@ Contributor(s):
   <session-factory>
     <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/FormationEcole</property>
-    <property name="hibernate.connection.username">root</property>
+    <property name="hibernate.connection.url">jdbc:mysql://192.168.1.108:3306/FormationEcole</property>
+    <property name="hibernate.connection.username">myuser</property>
     <property name="show_sql">true</property>
     <property name="format_sql">true</property>
     <mapping class="fr.utbm.entity.Location"/>

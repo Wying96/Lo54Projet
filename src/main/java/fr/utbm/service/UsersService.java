@@ -5,8 +5,11 @@
  */
 package fr.utbm.service;
 
+import fr.utbm.entity.CourseSession;
+import fr.utbm.entity.InscrirSession;
 import fr.utbm.entity.Users;
 import fr.utbm.entity.Location;
+import fr.utbm.repository.CourseSessionDaoImp;
 import fr.utbm.repository.InscrirSessionDao;
 import fr.utbm.repository.InscrirSessionDaoImp;
 import fr.utbm.repository.UsersDao;
@@ -16,6 +19,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.Resource;
+import static org.hibernate.type.TypeFactory.serializable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -32,8 +36,8 @@ public class UsersService {
     public InscrirSessionDao inscrirSessionDao;
 
     public Users findById(int id) {
-//       UsersDaoImp usersDao = new UsersDaoImp();
-        return usersDao.findById(id);
+       UsersDaoImp uDao = new UsersDaoImp();
+        return uDao.findById(id);
     }
 
     public void save(Users user) {
@@ -60,20 +64,29 @@ public class UsersService {
 
     public boolean inscrirSession(int uId, int sessionId) {
         InscrirSessionDaoImp inscrir = new InscrirSessionDaoImp();
-//       inscrirSessionDao.
-        if (inscrir.findByUserAndSession(uId, sessionId) == null) {
-            try {
-                usersDao.inscrirSession(uId, sessionId);
-            } catch (Exception e) {
-            } finally {
+      //       inscrirSessionDao.
+        UsersDaoImp uDao = new UsersDaoImp();
+      if (inscrir.findByUserAndSession(uId, sessionId) == null) {
+          CourseSessionDaoImp csDao = new CourseSessionDaoImp();
+          CourseSession cs = csDao.findById((Serializable) sessionId);
+          uDao.inscrirSession(uId, cs);
+//            try {
+//                InscrirSession inscri = new InscrirSession();
+//                inscri.setUserId(uId);
+//                inscri.setCourseSessionId(sessionId);
+//                inscrir.save(inscri);
+//            } catch (Exception e) {
+//            } finally {
                 return true;
-            }
+//            }
         } else {
             return false;
         }
     }
+    
     public Users findByEmail(String email){
-    return usersDao.findByEmail(email);
+        UsersDaoImp u=new UsersDaoImp();
+        return u.findByEmail(email);
     }
 
     

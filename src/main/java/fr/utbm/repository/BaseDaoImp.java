@@ -46,10 +46,12 @@ public class BaseDaoImp<T> implements BaseDao <T> {
      * 获取当前工作的Session 
      */  
     protected Session getSession() {
-//        try{
-//            return this.sessionFactory.getCurrentSession();
-//        }catch(Exception e){}
-        return this.sessionFactory.openSession();  
+//        Session session = this.sessionFactory.getCurrentSession();
+//        if(session.isOpen()){
+//            return session;
+//        }
+//        else
+            return this.sessionFactory.openSession();  
     }  
   
     @Override

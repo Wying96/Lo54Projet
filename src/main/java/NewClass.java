@@ -10,8 +10,10 @@ import fr.utbm.repository.CourseSessionDaoImp;
 import fr.utbm.repository.LocationDaoImp;
 import fr.utbm.repository.UsersDao;
 import fr.utbm.repository.UsersDaoImp;
+import fr.utbm.service.LocationService;
 import fr.utbm.service.UsersService;
 import fr.utbm.tools.HibernateUtil;
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -119,22 +121,50 @@ public class NewClass {
 //        } else {
 //            System.out.println("shibai l ");
 //        };
-        System.out.println("错误的账户： ");
-        if (user.checkLogin("eeeee@eeee.com", "123456")) {
+//        System.out.println("错误的账户： ");
+//        if (user.checkLogin("eeeee@eeee.com", "123456")) {
+//
+//            System.out.println("yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
+//        } else {
+//            System.out.println("搞错了！！！");
+//        };
+//
+        user.inscrirSession(11, 1);
 
-            System.out.println("yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
-        } else {
-            System.out.println("搞错了！！！");
-        };
-//
-//        user.inscrirSession(14, 1);
-//
-//        user.inscrirSession(14, 2);
-//
-//        user.inscrirSession(14, 3);
-//
-//        user.inscrirSession(14, 4);
+        user.inscrirSession(11, 2);
 
+        user.inscrirSession(11, 3);
+
+        user.inscrirSession(11, 4);
+        
+//        Users u = user.findByEmail("wuyu");
+        
+        Users u = user.findById(11);
+        if(u!=null)
+        {
+            System.out.println(u.toString());
+            
+            System.out.println("这个人的课程有： ");
+            for(CourseSession cs: u.getInscriptions()){
+                System.out.println(cs.toString());
+            }
+        }
+        
+        
+        System.out.println("-----------------------------------------------------------------------------------");
+        Users u2 = user.findByEmail("eeeee@eeee.fr");
+        if(u2!=null)
+        {
+            System.out.println(u2.toString());
+            
+            System.out.println("u2人的课程有： ");
+            for(CourseSession cs: u2.getInscriptions()){
+                System.out.println(cs.toString());
+            }
+        }
+        
+        
+ 
 //        
 //        UsersDaoImp usersImp = new UsersDaoImp();
 //        Users lcs2 = usersImp.findByEmail("eeeee@eeee.fr");

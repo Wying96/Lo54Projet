@@ -12,5 +12,6 @@ import fr.utbm.entity.InscrirSession;
  * @author c
  */
 public interface InscrirSessionDao extends BaseDao<InscrirSession> {
+    //TODO: getById for this table is not correct
     public InscrirSession findByUserAndSession(int userId,int sessionId);
 }

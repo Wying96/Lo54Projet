@@ -5,6 +5,7 @@
  */
 package fr.utbm.entity;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -16,7 +17,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "INSCRIRSESSION")
-public class InscrirSession {
+public class InscrirSession implements Serializable{
     @Id
     @Column(name = "COURSE_SESSION_ID")
     int courseSessionId;

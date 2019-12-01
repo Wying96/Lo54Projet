@@ -15,9 +15,10 @@ import fr.utbm.entity.Users;
 public interface UsersDao extends BaseDao<Users> {
     
 //   public boolean checkEmailExistence(String eamil); 
+   public Users findById(Integer id);
    public Users findByEmail(String email);
 //   public boolean checkLogin(Users u);
-   public void inscrirSession(int uId,int sessionId);
+   public void inscrirSession(int uId,CourseSession cs);
    
     
 }
