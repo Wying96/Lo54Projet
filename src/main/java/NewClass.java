@@ -193,14 +193,7 @@ public class NewClass {
 //        }
 
           UsersService us = new UsersService();
-          us.inscrirSession(33, 2);
-          us.inscrirSession(33, 3);
-          us.inscrirSession(33, 5);
-          us.inscrirSession(33, 6);
-          
-          us.inscrirSession(30, 3);
-          us.inscrirSession(30, 5);
-          
+          us.inscrirSession(2, 7);
 
 
 //        

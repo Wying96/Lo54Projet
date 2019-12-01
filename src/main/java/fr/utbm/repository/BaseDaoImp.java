@@ -143,12 +143,10 @@ public class BaseDaoImp<T> implements BaseDao <T> {
     
     @Override
     public List<T> findByHQL(String hql, Object... params) {  
-        Session session = this.getSession();
-        Query query = session.createQuery(hql);  
+        Query query = this.getSession().createQuery(hql);  
         for (int i = 0; params != null && i < params.length; i++) {  
             query.setParameter(i, params);  
         } 
-        session.close();
         return query.list();  
     }  
 

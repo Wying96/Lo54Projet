@@ -135,8 +135,12 @@ public String loginPage(HttpServletRequest request, HttpServletResponse response
         return "coursesession";
     }
 
-    @RequestMapping(value = "/updateUser/{courseSession.id}")
-    public String registrer(HttpServletRequest request, @PathVariable("courseSession.id") String courseId) {
+    @RequestMapping(value = "/updateUser/{courseSession.id}&{user.email}")
+    public String registrer(HttpServletRequest request, @PathVariable("courseSession.id") String courseId,
+            @PathVariable("user.email") String email) {
+        UsersService us = new UsersService();
+        int sessionId = Integer.parseInt(courseId);
+        us.inscrirSession(email, sessionId);
         request.setAttribute("course", courseId);
         return "register";
     }

@@ -74,7 +74,7 @@ public class UsersService {
     public boolean inscrirSession(int uId, int sessionId) {
         UsersDaoImp uDao = new UsersDaoImp();
         
-        Users u2 = uDao.findById((Serializable)uId);
+        Users u2 = uDao.findById(uId);
         
         CourseSessionDaoImp csDao = new CourseSessionDaoImp();
         CourseSession e2 = csDao.findById(sessionId);
