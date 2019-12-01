@@ -108,13 +108,13 @@ public class NewClass {
 //
 //        }
 //        
-        Users u2 = new Users();
-        u2.setFirstname("1111111");
-        u2.setLastname("44sahdgjh");
-        u2.setPassword("44sahdgjh");
-        u2.setAddress("44sdada");
-        u2.setEmail("111111111");
-        u2.setPhone("1111111111");
+//        Users u2 = new Users();
+//        u2.setFirstname("1111111");
+//        u2.setLastname("44sahdgjh");
+//        u2.setPassword("44sahdgjh");
+//        u2.setAddress("44sdada");
+//        u2.setEmail("111111111");
+//        u2.setPhone("1111111111");
         
 //        u2.setPhone("44ssdaddsds");
 //        UsersService user = new UsersService();
@@ -169,22 +169,19 @@ public class NewClass {
 
 
 //        
-        UsersDaoImp uDao = new UsersDaoImp();
-        Users u = uDao.findById(11);
-        
-        uDao.save(u2);
-        
+//        UsersDaoImp uDao = new UsersDaoImp();
+//        Users u2 = uDao.findById(7);
+//        
 //        CourseSessionDaoImp csDao = new CourseSessionDaoImp();
 //        CourseSession e2 = csDao.findById(2);
 //        CourseSession e3 = csDao.findById(3);
-//        ArrayList<CourseSession> lcs = new ArrayList<CourseSession>(2);
+//        ArrayList<CourseSession> lcs = new ArrayList<CourseSession>();
 //        lcs.add(e2);
 //        lcs.add(e3);
 //        
-//        u.setCourseSessionCollection(lcs);
-//        uDao.update(u);
+//        u2.setCourseSessionCollection(lcs);
+//        uDao.update(u2);
 //        
-//        Users u2 = uDao.findById(11);
 //        if(u2!=null)
 //        {
 //            System.out.println(u2.toString());
@@ -195,6 +192,15 @@ public class NewClass {
 //            }
 //        }
 
+          UsersService us = new UsersService();
+          us.inscrirSession(33, 2);
+          us.inscrirSession(33, 3);
+          us.inscrirSession(33, 5);
+          us.inscrirSession(33, 6);
+          
+          us.inscrirSession(30, 3);
+          us.inscrirSession(30, 5);
+          
 
 
 //        
