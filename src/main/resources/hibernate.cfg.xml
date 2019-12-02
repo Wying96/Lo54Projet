@@ -52,6 +52,5 @@ Contributor(s):
     <mapping class="fr.utbm.entity.CourseSession"/>
     <mapping class="fr.utbm.entity.Course"/>
     <mapping class="fr.utbm.entity.Users"/>
-    <mapping class="fr.utbm.entity.InscrirSession"/>
   </session-factory>
 </hibernate-configuration>

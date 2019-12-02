@@ -8,7 +8,6 @@ package fr.utbm.service;
 
 import fr.utbm.entity.Course;
 import fr.utbm.entity.Location;
-import fr.utbm.repository.CourseDao;
 import fr.utbm.repository.CourseDaoImp;
 import java.io.Serializable;
 import java.util.Date;
@@ -24,7 +23,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class CourseService {
     @Resource(name="courseDao")
-    public CourseDao courseDao;
+    public CourseDaoImp courseDao;
     public List<Course> findByTitle(String title){
 //        CourseDaoImp courseDao = new CourseDaoImp();
         return courseDao.findByTitle(title);

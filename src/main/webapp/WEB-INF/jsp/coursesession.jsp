@@ -85,9 +85,10 @@
 
                                 <td>${courseSession.locationId.city}</td>
                                 <td>
-                                    
+                                    <c:if test="${!user.courseSessionCollection.contains(courseSession)}">
                                     <button class="sui-btn btn-success"><a href="updateUser/${courseSession.id}&${user.email}">pré-inscrire</a></button>
-                                </td>
+                                    </c:if>
+                            </td>
                                 </form>
                             </tr>
 
