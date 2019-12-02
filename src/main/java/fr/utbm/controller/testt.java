@@ -64,12 +64,10 @@ public class testt {
 //        request.setAttribute("message", "Hello WU Ying! \n 测试service返回数据:");
 //
 //    return "location";}
-     @RequestMapping(value="/")
-public String loginPage(HttpServletRequest request, HttpServletResponse response){
-		return "login";
-	}
-      
-
+    @RequestMapping(value = "/")
+    public String loginPage(HttpServletRequest request, HttpServletResponse response) {
+        return "login";
+    }
 
     @RequestMapping(value = "/coursesession")
     public String main(HttpServletRequest request, HttpServletResponse response) {
@@ -78,7 +76,7 @@ public String loginPage(HttpServletRequest request, HttpServletResponse response
 //       LocationService locationService=new LocationService();
         List<Location> locations = locationService.findAll();
         //Add an empty location
-        locations.add(0, new Location(null,null));
+        locations.add(0, new Location(null, null));
         request.setAttribute("lists", locations);
         request.setAttribute("coursesList", coursesList);
         return "coursesession";
@@ -130,7 +128,7 @@ public String loginPage(HttpServletRequest request, HttpServletResponse response
         request.setAttribute("coursesList", coursesResults);
 //LocationService locationService=new LocationService();
         List<Location> locations = locationService.findAll();
-        locations.add(0, new Location(null,null));
+        locations.add(0, new Location(null, null));
         request.setAttribute("lists", locations);
         return "coursesession";
     }
@@ -138,19 +136,29 @@ public String loginPage(HttpServletRequest request, HttpServletResponse response
     @RequestMapping(value = "/updateUser/{courseSession.id}&{user.email}")
     public String registrer(HttpServletRequest request, @PathVariable("courseSession.id") String courseId,
             @PathVariable("user.email") String email) {
-        UsersService us = new UsersService();
+//        UsersService us = new UsersService();
         int sessionId = Integer.parseInt(courseId);
-        us.inscrirSession(email, sessionId);
-        request.setAttribute("course", courseId);
-        return "register";
+        usersService.inscrirSession(email, sessionId);
+//        request.setAttribute("course", courseId);
+        Users u = usersService.findByEmail(email);
+        List<Course> coursesList = courseService.findAll();
+//       LocationService locationService=new LocationService();
+        List<Location> locations = locationService.findAll();
+        //Add an empty location
+        locations.add(0, new Location(null, null));
+
+        request.setAttribute("lists", locations);
+        request.setAttribute("coursesList", coursesList);
+        request.getSession().setAttribute("user", u);
+
+        return "redirect:/coursesession";
     }
 
     @RequestMapping(value = "/registrersession")
     public String registrerSession(HttpServletRequest request, HttpServletResponse response) {
         Integer id = Integer.parseInt(request.getParameter("coursesessionid"));
-        
+
 //        courseService.fin
-        
         String lastname = request.getParameter("lastname");
         String firstname = request.getParameter("firstname");
         String address = request.getParameter("address");
@@ -180,29 +188,27 @@ public String loginPage(HttpServletRequest request, HttpServletResponse response
         String address = request.getParameter("address");
         String email = request.getParameter("email");
         String phone = request.getParameter("phone");
-        boolean result=usersService.checkEmailAvalible(email);
-        if(result==true){
-            CourseSessionService courseSessionService=new CourseSessionService();
-       
-        Users u = new Users();
-        u.setPhone(phone);
-        u.setAddress(address);
-        u.setFirstname(firstname);
-        u.setEmail(email);
-        u.setLastname(lastname);
-        u.setPassword(pwd);
-        usersService.save(u);
+        boolean result = usersService.checkEmailAvalible(email);
+        if (result == true) {
+            CourseSessionService courseSessionService = new CourseSessionService();
+
+            Users u = new Users();
+            u.setPhone(phone);
+            u.setAddress(address);
+            u.setFirstname(firstname);
+            u.setEmail(email);
+            u.setLastname(lastname);
+            u.setPassword(pwd);
+            usersService.save(u);
 //        request.setAttribute("userEmail", email);
-        request.getSession().setAttribute("user", u);	
-        return "redirect:coursesession";
-        
+            request.getSession().setAttribute("user", u);
+            return "redirect:coursesession";
+
+        } else {
+            request.getSession().setAttribute("msg", "error");
+            return "redirect:inscrire";
         }
-        else{
-         request.getSession().setAttribute("msg", "error");
-         return "redirect:inscrire";
-         
-        }
-        
+
     }
 
     @RequestMapping(value = "/inscrire")
@@ -210,36 +216,34 @@ public String loginPage(HttpServletRequest request, HttpServletResponse response
 //     
         return "inscrire";
     }
+
     @RequestMapping(value = "/login")
     public String validerCompte(HttpServletRequest request, HttpServletResponse response) {
-         String userName =request.getParameter("accountNo");
-		String password = request.getParameter("pwd");
+        String userName = request.getParameter("accountNo");
+        String password = request.getParameter("pwd");
 
-		boolean isValidUser = usersService.checkLogin(userName, password);
-		if(!isValidUser){
-request.setAttribute("msg", "le mot de passe ou identifiant est incorrecte!");
-       
-             return "forward:/";
-                }
-   
-		else{
+        boolean isValidUser = usersService.checkLogin(userName, password);
+        if (!isValidUser) {
+            request.setAttribute("msg", "le mot de passe ou identifiant est incorrecte!");
 
-                    Users u=usersService.findByEmail(userName);
+            return "forward:/";
+        } else {
 
-			  List<Course> coursesList = courseService.findAll();
+            Users u = usersService.findByEmail(userName);
+
+            List<Course> coursesList = courseService.findAll();
 //       LocationService locationService=new LocationService();
-        List<Location> locations = locationService.findAll();
-        //Add an empty location
-        locations.add(0, new Location(null,null));
-        request.setAttribute("lists", locations);
-        request.setAttribute("coursesList", coursesList);
+            List<Location> locations = locationService.findAll();
+            //Add an empty location
+            locations.add(0, new Location(null, null));
+            request.setAttribute("lists", locations);
+            request.setAttribute("coursesList", coursesList);
 
-         request.getSession().setAttribute("user", u);
+            request.getSession().setAttribute("user", u);
 
-			return "coursesession";
-	
-		
-		}
+            return "coursesession";
+
+        }
     }
-    
+
 }

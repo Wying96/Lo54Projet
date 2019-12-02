@@ -66,6 +66,7 @@ public class UsersDaoImp extends BaseDaoImp<Users> implements UsersDao {
             session.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
+            session.getTransaction().rollback();
             if (msg == null || msg.length() == 0) {
                 Integer id = users.getIdUser();
                 if (this.findById((Serializable)id) == null) {

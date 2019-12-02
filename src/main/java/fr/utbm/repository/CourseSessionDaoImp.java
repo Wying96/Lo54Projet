@@ -192,6 +192,7 @@ public class CourseSessionDaoImp extends BaseDaoImp<CourseSession>
             session.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
+            session.getTransaction().rollback();
             if (msg == null || msg.length() == 0) {
                 Integer id = courseSession.getId();
                 if (this.findById((Serializable)id) == null) {

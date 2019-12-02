@@ -85,6 +85,7 @@
 
                                 <td>${courseSession.locationId.city}</td>
                                 <td>
+                                    
                                     <button class="sui-btn btn-success"><a href="updateUser/${courseSession.id}&${user.email}">pré-inscrire</a></button>
                                 </td>
                                 </form>
