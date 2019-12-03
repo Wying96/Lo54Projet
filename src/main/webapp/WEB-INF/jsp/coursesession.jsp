@@ -81,7 +81,7 @@
                                 <td>${courseSession.id}</td>
                                 <td>${courseSession.startDate}</td>
                                 <td>${courseSession.endDate}</td>
-                                <td>${courseSession.clientCollection.size()}/${courseSession.maxNumber}</td>
+                                <td>${courseSession.usersCollection.size()}/${courseSession.maxNumber}</td>
 
                                 <td>${courseSession.locationId.city}</td>
                                 <td>

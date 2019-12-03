@@ -51,7 +51,7 @@
              
                <div style="color:red">
   
- ${msg}
+ ${error}
 </div>
                  </c:if>
               <label class="sr-only" for="inputPassword">Mot de passe</label>

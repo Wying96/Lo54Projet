@@ -33,7 +33,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.portlet.ModelAndView;
+import org.springframework.web.servlet.ModelAndView;
+
 
 /**
  *
@@ -65,22 +66,23 @@ public class testt {
 //
 //    return "location";}
     @RequestMapping(value = "/")
-    public String loginPage(HttpServletRequest request, HttpServletResponse response) {
-        return "login";
+    public ModelAndView loginPage() {
+        
+        return new ModelAndView("home");
     }
 
-    @RequestMapping(value = "/coursesession")
-    public String main(HttpServletRequest request, HttpServletResponse response) {
-
-        List<Course> coursesList = courseService.findAll();
-//       LocationService locationService=new LocationService();
-        List<Location> locations = locationService.findAll();
-        //Add an empty location
-        locations.add(0, new Location(null, null));
-        request.setAttribute("lists", locations);
-        request.setAttribute("coursesList", coursesList);
-        return "coursesession";
-    }
+//    @RequestMapping(value = "/coursesession")
+//    public String main(HttpServletRequest request, HttpServletResponse response) {
+//
+//        List<Course> coursesList = courseService.findAll();
+////       LocationService locationService=new LocationService();
+//        List<Location> locations = locationService.findAll();
+//        //Add an empty location
+//        locations.add(0, new Location(null, null));
+//        request.setAttribute("lists", locations);
+//        request.setAttribute("coursesList", coursesList);
+//        return "coursesession";
+//    }
 //    public String printHello(ModelMap model){
 ////使用Service返回数据成功
 //        List<Course> cs = courseService.findByTitle("a");
@@ -93,7 +95,7 @@ public class testt {
 //    }
 
     @RequestMapping(value = "/searchMultiCondition")
-    public String searchMultiCondition(HttpServletRequest request, HttpServletResponse response) {
+    public ModelAndView searchMultiCondition(HttpServletRequest request, HttpServletResponse response) {
         String parteOfTitle = request.getParameter("title");
         String dateStart = request.getParameter("date1");
         String dateEnd = request.getParameter("date2");
@@ -130,11 +132,15 @@ public class testt {
         List<Location> locations = locationService.findAll();
         locations.add(0, new Location(null, null));
         request.setAttribute("lists", locations);
-        return "coursesession";
+        ModelAndView modelAndView=new ModelAndView();
+        modelAndView.setViewName("coursesession");
+        modelAndView.addObject("lists", locations);
+        modelAndView.addObject("coursesList", coursesResults);
+        return modelAndView;
     }
 
     @RequestMapping(value = "/updateUser/{courseSession.id}&{user.email}")
-    public String registrer(HttpServletRequest request, @PathVariable("courseSession.id") String courseId,
+    public ModelAndView registrer(HttpServletRequest request, @PathVariable("courseSession.id") String courseId,
             @PathVariable("user.email") String email) {
 //        UsersService us = new UsersService();
         int sessionId = Integer.parseInt(courseId);
@@ -147,13 +153,17 @@ public class testt {
         //Add an empty location
         locations.add(0, new Location(null, null));
 
-        request.setAttribute("lists", locations);
-        request.setAttribute("coursesList", coursesList);
-        request.getSession().setAttribute("user", u);
-
-        return "redirect:/coursesession";
+//        request.setAttribute("lists", locations);
+//        request.setAttribute("coursesList", coursesList);
+//        request.getSession().setAttribute("user", u);
+ModelAndView modelAndView =new ModelAndView();
+modelAndView.addObject("user", u);
+modelAndView.addObject("lists", locations);
+modelAndView.addObject("coursesList", coursesList);
+modelAndView.setViewName("redirect:/login");
+        return modelAndView;
     }
-
+//pas besoin 
     @RequestMapping(value = "/registrersession")
     public String registrerSession(HttpServletRequest request, HttpServletResponse response) {
         Integer id = Integer.parseInt(request.getParameter("coursesessionid"));
@@ -180,7 +190,7 @@ public class testt {
     }
 
     @RequestMapping(value = "/inscrireclient")
-    public String inscrireClient(HttpServletRequest request, HttpServletResponse response) {
+    public ModelAndView inscrireClient(HttpServletRequest request, HttpServletResponse response) {
 //      Integer id=Integer.parseInt(request.getParameter("coursesessionid"));
         String pwd = request.getParameter("password");
         String lastname = request.getParameter("lastname");
@@ -202,46 +212,58 @@ public class testt {
             usersService.save(u);
 //        request.setAttribute("userEmail", email);
             request.getSession().setAttribute("user", u);
-            return "redirect:coursesession";
+            ModelAndView modelAndView=new ModelAndView();
+            modelAndView.addObject("user", u);
+             List<Course> coursesList = courseService.findAll();
+
+            List<Location> locations = locationService.findAll();
+ modelAndView.addObject("lists", locations);
+            modelAndView.addObject("coursesList", coursesList);
+            modelAndView.setViewName("coursesession");
+            
+            return modelAndView;
 
         } else {
-            request.getSession().setAttribute("msg", "error");
-            return "redirect:inscrire";
+            //request.getSession().setAttribute("msg", "error");
+            return new ModelAndView("inscrire","msg","email déjà existe");
         }
 
     }
 
     @RequestMapping(value = "/inscrire")
-    public String inscrire(HttpServletRequest request, HttpServletResponse response) {
+    public ModelAndView inscrire(HttpServletRequest request, HttpServletResponse response) {
 //     
-        return "inscrire";
+        return new ModelAndView("inscrire");
     }
 
-    @RequestMapping(value = "/login")
-    public String validerCompte(HttpServletRequest request, HttpServletResponse response) {
+    @RequestMapping(value = "login")
+    public ModelAndView validerCompte(HttpServletRequest request, HttpServletResponse response) {
         String userName = request.getParameter("accountNo");
         String password = request.getParameter("pwd");
 
         boolean isValidUser = usersService.checkLogin(userName, password);
         if (!isValidUser) {
-            request.setAttribute("msg", "le mot de passe ou identifiant est incorrecte!");
+//            request.setAttribute("msg", "le mot de passe ou identifiant est incorrecte!");
 
-            return "forward:/";
+           return new ModelAndView("home","error","le mot de passe ou identifiant est incorrecte");
         } else {
 
             Users u = usersService.findByEmail(userName);
 
             List<Course> coursesList = courseService.findAll();
-//       LocationService locationService=new LocationService();
+
             List<Location> locations = locationService.findAll();
-            //Add an empty location
+
             locations.add(0, new Location(null, null));
-            request.setAttribute("lists", locations);
-            request.setAttribute("coursesList", coursesList);
+//            request.setAttribute("lists", locations);
+//            request.setAttribute("coursesList", coursesList);
 
             request.getSession().setAttribute("user", u);
-
-            return "coursesession";
+            ModelAndView modelAndView=new ModelAndView();
+            modelAndView.addObject("lists", locations);
+            modelAndView.addObject("coursesList", coursesList);
+modelAndView.setViewName("coursesession");
+            return  modelAndView;
 
         }
     }
