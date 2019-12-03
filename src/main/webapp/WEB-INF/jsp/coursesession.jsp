@@ -86,7 +86,14 @@
                                 <td>${courseSession.locationId.city}</td>
                                 <td>
                                     <c:if test="${!user.courseSessionCollection.contains(courseSession)}">
-                                    <button class="sui-btn btn-success"><a href="updateUser/${courseSession.id}&${user.email}">pré-inscrire</a></button>
+                                        <form action="inscrireCourse" method="post">
+                                            <input type="hidden" name="email" readonly="true" value="${user.email}"/>
+                                            <input type="hidden" name="courseSessionId" readonly="true" value="${courseSession.id} "/>
+                                            <button class="sui-btn btn-success" type="submit" id="btn_preInscrir">Pré-inscrir</button>
+                                        </form>
+                                    </c:if>
+                                    <c:if test="${user.courseSessionCollection.contains(courseSession)}">
+                                       Vous avez bien pré-inscrire ce course!
                                     </c:if>
                             </td>
                                 </form>

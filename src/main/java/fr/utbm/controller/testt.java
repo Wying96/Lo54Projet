@@ -35,7 +35,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-
 /**
  *
  * @author wuying
@@ -67,32 +66,9 @@ public class testt {
 //    return "location";}
     @RequestMapping(value = "/")
     public ModelAndView loginPage() {
-        
+
         return new ModelAndView("home");
     }
-
-//    @RequestMapping(value = "/coursesession")
-//    public String main(HttpServletRequest request, HttpServletResponse response) {
-//
-//        List<Course> coursesList = courseService.findAll();
-////       LocationService locationService=new LocationService();
-//        List<Location> locations = locationService.findAll();
-//        //Add an empty location
-//        locations.add(0, new Location(null, null));
-//        request.setAttribute("lists", locations);
-//        request.setAttribute("coursesList", coursesList);
-//        return "coursesession";
-//    }
-//    public String printHello(ModelMap model){
-////使用Service返回数据成功
-//        List<Course> cs = courseService.findByTitle("a");
-//        model.addAttribute("cours", cs);
-//
-//        model.addAttribute("message", "Hello WU Ying! \n 测试service返回数据:");
-//
-//    return "location";  //hello 是页面模版的名字 hello.jsp
-//        
-//    }
 
     @RequestMapping(value = "/searchMultiCondition")
     public ModelAndView searchMultiCondition(HttpServletRequest request, HttpServletResponse response) {
@@ -109,7 +85,7 @@ public class testt {
 
         if (dateStart != "") {
             try {
-                startDate = sdf.parse(dateStart); // 之後要看 controller 層傳入的數據了
+                startDate = sdf.parse(dateStart);
             } catch (ParseException ex) {
                 //java.util.logging.Logger.getLogger(NewClass.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -118,7 +94,7 @@ public class testt {
         }
         if (dateEnd != "") {
             try {
-                endDate = sdf.parse(dateEnd); // 之後要看 controller 層傳入的數據了
+                endDate = sdf.parse(dateEnd);
             } catch (ParseException ex) {
                 //java.util.logging.Logger.getLogger(NewClass.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -128,42 +104,52 @@ public class testt {
 
         List<Course> coursesResults = courseService.findByMultiCcondition(parteOfTitle, startDate, endDate, locationId);
         request.setAttribute("coursesList", coursesResults);
-//LocationService locationService=new LocationService();
         List<Location> locations = locationService.findAll();
         locations.add(0, new Location(null, null));
         request.setAttribute("lists", locations);
-        ModelAndView modelAndView=new ModelAndView();
+        ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("coursesession");
         modelAndView.addObject("lists", locations);
         modelAndView.addObject("coursesList", coursesResults);
         return modelAndView;
     }
 
-    @RequestMapping(value = "/updateUser/{courseSession.id}&{user.email}")
-    public ModelAndView registrer(HttpServletRequest request, @PathVariable("courseSession.id") String courseId,
-            @PathVariable("user.email") String email) {
-//        UsersService us = new UsersService();
+    
+    public String delSpace(String str) throws Exception {  
+        if (str == null) {  
+            return null;  
+        }  
+        String regStartSpace = "^[　 ]*";  
+        String regEndSpace = "[　 ]*$";  
+        // 连续两个 replaceAll   
+        // 第一个是去掉前端的空格， 第二个是去掉后端的空格   
+        String strDelSpace = str.replaceAll(regStartSpace, "").replaceAll(regEndSpace, "");  
+        return strDelSpace;  
+    }
+    
+    @RequestMapping(value = "inscrireCourse")
+    public ModelAndView inscrireCourse(HttpServletRequest request,HttpServletResponse response) throws Exception {
+        String email = request.getParameter("email");
+        String courseId = this.delSpace(request.getParameter("courseSessionId"));
         int sessionId = Integer.parseInt(courseId);
+        //user inscrire session 
         usersService.inscrirSession(email, sessionId);
-//        request.setAttribute("course", courseId);
+
         Users u = usersService.findByEmail(email);
+
         List<Course> coursesList = courseService.findAll();
-//       LocationService locationService=new LocationService();
         List<Location> locations = locationService.findAll();
-        //Add an empty location
         locations.add(0, new Location(null, null));
 
-//        request.setAttribute("lists", locations);
-//        request.setAttribute("coursesList", coursesList);
-//        request.getSession().setAttribute("user", u);
-ModelAndView modelAndView =new ModelAndView();
-modelAndView.addObject("user", u);
-modelAndView.addObject("lists", locations);
-modelAndView.addObject("coursesList", coursesList);
-modelAndView.setViewName("redirect:/login");
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("user", u);
+        modelAndView.addObject("lists", locations);
+        modelAndView.addObject("coursesList", coursesList);
+        modelAndView.setViewName("coursesession");
         return modelAndView;
     }
-//pas besoin 
+    
+
     @RequestMapping(value = "/registrersession")
     public String registrerSession(HttpServletRequest request, HttpServletResponse response) {
         Integer id = Integer.parseInt(request.getParameter("coursesessionid"));
@@ -212,20 +198,20 @@ modelAndView.setViewName("redirect:/login");
             usersService.save(u);
 //        request.setAttribute("userEmail", email);
             request.getSession().setAttribute("user", u);
-            ModelAndView modelAndView=new ModelAndView();
+            ModelAndView modelAndView = new ModelAndView();
             modelAndView.addObject("user", u);
-             List<Course> coursesList = courseService.findAll();
+            List<Course> coursesList = courseService.findAll();
 
             List<Location> locations = locationService.findAll();
- modelAndView.addObject("lists", locations);
+            modelAndView.addObject("lists", locations);
             modelAndView.addObject("coursesList", coursesList);
             modelAndView.setViewName("coursesession");
-            
+
             return modelAndView;
 
         } else {
             //request.getSession().setAttribute("msg", "error");
-            return new ModelAndView("inscrire","msg","email déjà existe");
+            return new ModelAndView("inscrire", "msg", "email déjà existe");
         }
 
     }
@@ -245,7 +231,7 @@ modelAndView.setViewName("redirect:/login");
         if (!isValidUser) {
 //            request.setAttribute("msg", "le mot de passe ou identifiant est incorrecte!");
 
-           return new ModelAndView("home","error","le mot de passe ou identifiant est incorrecte");
+            return new ModelAndView("home", "error", "le mot de passe ou identifiant est incorrecte");
         } else {
 
             Users u = usersService.findByEmail(userName);
@@ -259,11 +245,11 @@ modelAndView.setViewName("redirect:/login");
 //            request.setAttribute("coursesList", coursesList);
 
             request.getSession().setAttribute("user", u);
-            ModelAndView modelAndView=new ModelAndView();
+            ModelAndView modelAndView = new ModelAndView();
             modelAndView.addObject("lists", locations);
             modelAndView.addObject("coursesList", coursesList);
-modelAndView.setViewName("coursesession");
-            return  modelAndView;
+            modelAndView.setViewName("coursesession");
+            return modelAndView;
 
         }
     }

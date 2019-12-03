@@ -8,6 +8,7 @@ package fr.utbm.service;
 
 import fr.utbm.entity.Course;
 import fr.utbm.entity.Location;
+import fr.utbm.repository.CourseDao;
 import fr.utbm.repository.CourseDaoImp;
 import java.io.Serializable;
 import java.util.Date;
