@@ -111,6 +111,7 @@ public class CourseDaoImp extends BaseDaoImp<Course> implements CourseDao {
                 hql += "and v.locationId.id = :locationId ";
             }
         }
+        hql += "order by c.id ";
 
         Query query = this.getSession().createQuery(hql);
         if (title != null) { query.setString("partOfTitle", "%" + title + "%");}

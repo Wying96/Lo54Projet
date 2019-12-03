@@ -69,9 +69,43 @@ public class testt {
 
         return new ModelAndView("home");
     }
+    
+    @RequestMapping(value = "login")
+    public ModelAndView validerCompte(HttpServletRequest request, HttpServletResponse response) {
+        String userName = request.getParameter("accountNo");
+        String password = request.getParameter("pwd");
 
-    @RequestMapping(value = "/searchMultiCondition")
+        boolean isValidUser = usersService.checkLogin(userName, password);
+        if (!isValidUser) {
+//            request.setAttribute("msg", "le mot de passe ou identifiant est incorrecte!");
+
+            return new ModelAndView("home", "error", "le mot de passe ou identifiant est incorrecte");
+        } else {
+
+            Users u = usersService.findByEmail(userName);
+
+            List<Course> coursesList = courseService.findAll();
+
+            List<Location> locations = locationService.findAll();
+
+            locations.add(0, new Location(null, null));
+//            request.setAttribute("lists", locations);
+//            request.setAttribute("coursesList", coursesList);
+
+            request.getSession().setAttribute("user", u);
+            ModelAndView modelAndView = new ModelAndView();
+            modelAndView.addObject("lists", locations);
+            modelAndView.addObject("coursesList", coursesList);
+            modelAndView.setViewName("coursesession");
+            return modelAndView;
+
+        }
+    }
+    
+    @RequestMapping(value = "searchMultiCondition")
     public ModelAndView searchMultiCondition(HttpServletRequest request, HttpServletResponse response) {
+        String email = request.getParameter("email");
+        
         String parteOfTitle = request.getParameter("title");
         String dateStart = request.getParameter("date1");
         String dateEnd = request.getParameter("date2");
@@ -103,12 +137,16 @@ public class testt {
         }
 
         List<Course> coursesResults = courseService.findByMultiCcondition(parteOfTitle, startDate, endDate, locationId);
-        request.setAttribute("coursesList", coursesResults);
+//        request.setAttribute("coursesList", coursesResults);
         List<Location> locations = locationService.findAll();
         locations.add(0, new Location(null, null));
-        request.setAttribute("lists", locations);
+//        request.setAttribute("lists", locations);
+
+        Users u = usersService.findByEmail(email);
+        
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("coursesession");
+        modelAndView.addObject("user", u);
         modelAndView.addObject("lists", locations);
         modelAndView.addObject("coursesList", coursesResults);
         return modelAndView;
@@ -127,6 +165,7 @@ public class testt {
         return strDelSpace;  
     }
     
+    //Action of POST 
     @RequestMapping(value = "inscrireCourse")
     public ModelAndView inscrireCourse(HttpServletRequest request,HttpServletResponse response) throws Exception {
         String email = request.getParameter("email");
@@ -145,6 +184,7 @@ public class testt {
         modelAndView.addObject("user", u);
         modelAndView.addObject("lists", locations);
         modelAndView.addObject("coursesList", coursesList);
+        //
         modelAndView.setViewName("coursesession");
         return modelAndView;
     }
@@ -222,36 +262,5 @@ public class testt {
         return new ModelAndView("inscrire");
     }
 
-    @RequestMapping(value = "login")
-    public ModelAndView validerCompte(HttpServletRequest request, HttpServletResponse response) {
-        String userName = request.getParameter("accountNo");
-        String password = request.getParameter("pwd");
-
-        boolean isValidUser = usersService.checkLogin(userName, password);
-        if (!isValidUser) {
-//            request.setAttribute("msg", "le mot de passe ou identifiant est incorrecte!");
-
-            return new ModelAndView("home", "error", "le mot de passe ou identifiant est incorrecte");
-        } else {
-
-            Users u = usersService.findByEmail(userName);
-
-            List<Course> coursesList = courseService.findAll();
-
-            List<Location> locations = locationService.findAll();
-
-            locations.add(0, new Location(null, null));
-//            request.setAttribute("lists", locations);
-//            request.setAttribute("coursesList", coursesList);
-
-            request.getSession().setAttribute("user", u);
-            ModelAndView modelAndView = new ModelAndView();
-            modelAndView.addObject("lists", locations);
-            modelAndView.addObject("coursesList", coursesList);
-            modelAndView.setViewName("coursesession");
-            return modelAndView;
-
-        }
-    }
 
 }
