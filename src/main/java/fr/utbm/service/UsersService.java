@@ -32,8 +32,8 @@ public class UsersService {
 
 
     public Users findById(int id) {
-       UsersDaoImp uDao = new UsersDaoImp();
-        return uDao.findById(id);
+//       UsersDaoImp uDao = new UsersDaoImp();
+        return usersDao.findById(id);
     }
 
     public void save(Users user) {
@@ -48,8 +48,8 @@ public class UsersService {
     }
 
     public boolean checkLogin(String inEmail, String inPwd) {
-        UsersDaoImp usersImp = new UsersDaoImp();
-        Users u = usersImp.findByEmail(inEmail);
+//        UsersDaoImp usersImp = new UsersDaoImp();
+        Users u = usersDao.findByEmail(inEmail);
         //TODO:chang boolean to int to identifier error of pwd of compt notExist
         if (u != null) {
             return (u.getPassword().equals(inPwd));
@@ -59,34 +59,34 @@ public class UsersService {
     }
 
     public boolean inscrirSession(String email, int sessionId) {
-        UsersDaoImp uDao = new UsersDaoImp();
+//        UsersDaoImp uDao = new UsersDaoImp();
         
-        Users u2 = uDao.findByEmail(email);
+        Users u2 = usersDao.findByEmail(email);
         
         CourseSessionDaoImp csDao = new CourseSessionDaoImp();
         CourseSession e2 = csDao.findById(sessionId);
         u2.getCourseSessionCollection().add(e2);
-        uDao.update(u2);
+        usersDao.update(u2);
         
       return true;
     }
     
     public boolean inscrirSession(int uId, int sessionId) {
-        UsersDaoImp uDao = new UsersDaoImp();
+//        UsersDaoImp uDao = new UsersDaoImp();
         
-        Users u2 = uDao.findById(uId);
+        Users u2 = usersDao.findById(uId);
         
         CourseSessionDaoImp csDao = new CourseSessionDaoImp();
         CourseSession e2 = csDao.findById(sessionId);
         u2.getCourseSessionCollection().add(e2);
-        uDao.update(u2);
+        usersDao.update(u2);
         
       return true;
     }
     
     public Users findByEmail(String email){
-        UsersDaoImp u=new UsersDaoImp();
-        return u.findByEmail(email);
+//        UsersDaoImp u=new UsersDaoImp();
+        return usersDao.findByEmail(email);
     }
 
     

@@ -6,9 +6,11 @@
 package fr.utbm.service;
 
 import fr.utbm.entity.Location;
+import fr.utbm.repository.LocationDao;
 import fr.utbm.repository.LocationDaoImp;
 import java.io.Serializable;
 import java.util.List;
+import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,27 +19,26 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class LocationService {
+    
+    @Resource(name = "locationDao")
+    public LocationDao locationDao;
+    
      public void save(Location location){
-        LocationDaoImp locationDao = new LocationDaoImp();
         locationDao.save(location);
     }
     
     public void update (Location location){
-        LocationDaoImp locationDao = new LocationDaoImp();
         locationDao.update(location);
     }
     
     public void delete(Serializable id){
-        LocationDaoImp locationDao = new LocationDaoImp();
         locationDao.delete(id);
     }
     
     public Location findById(Serializable id){
-        LocationDaoImp locationDao = new LocationDaoImp();
         return locationDao.findById(id);       
     }
     public List<Location> findAll(){
-      LocationDaoImp locationDao = new LocationDaoImp();
       return locationDao.findAll();
     }
 }

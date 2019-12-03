@@ -93,7 +93,7 @@
                                             </form>
                                         </c:if>
                                         <c:if test="${user.courseSessionCollection.contains(courseSession)}">
-                                            Vous avez bien pré-inscrire ce course!
+                                            Vous avez bien pré-inscrit ce cours!
                                         </c:if>
                                     </td>
                                     </form>
