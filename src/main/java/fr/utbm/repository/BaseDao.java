@@ -22,6 +22,6 @@ public interface BaseDao<T> {
     public T findById(Serializable id);  
     
     public List<T> findAll();  
-//  TODO: 设置成如下的传参数方式 hql, Object... params 用来处理所有类型string/int/bool。。。
+
     public List<T> findByHQL(String hql, Object... params);  
 }

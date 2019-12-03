@@ -77,7 +77,7 @@ public class CourseSessionDaoImp extends BaseDaoImp<CourseSession>
                 courseId.getCourseSessionCollection().add(courseSession);
                 courseId = (Course) session.merge(courseId);
             }
-            //添加新的users
+            //new users
             for (Users usersCollectionUsers : courseSession.getUsersCollection()) {
                 usersCollectionUsers.getCourseSessionCollection().add(courseSession);
                 usersCollectionUsers = (Users) session.merge(usersCollectionUsers);
@@ -168,7 +168,7 @@ public class CourseSessionDaoImp extends BaseDaoImp<CourseSession>
             for (Users usersCollectionOldUsers : usersCollectionOld) {
                 if (!usersCollectionNew.contains(usersCollectionOldUsers)) {
                     usersCollectionOldUsers.getCourseSessionCollection().remove(courseSession);
-                    //这里没准会有问题
+                    
                     usersCollectionOldUsers = (Users) session.merge(usersCollectionOldUsers);
                 }
             }

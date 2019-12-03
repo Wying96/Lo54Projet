@@ -20,7 +20,7 @@ public interface CourseDao extends BaseDao<Course> {
     
     public List<Course> findByTitle(String title);
     
-    //public List<Course> findBy2SessionTime(Object... params);
+
     public List<Course> findBy2SessionTime(Date stratDate, Date endDate);
     public List<Course> findBySessionLocation(Location location);
     public List<Course> findByOneDayDispon(Date dateDispon);

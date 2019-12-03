@@ -25,32 +25,23 @@ import org.hibernate.SessionFactory;
 
 public class BaseDaoImp<T> implements BaseDao <T> {
     private final Class<T> clazz;  
-  /** 
-     * 向DAO层注入SessionFactory 
-     */  
+   
    
     private final SessionFactory sessionFactory;  
     
-    /** 
-     * 通过构造方法指定DAO的具体实现类 
-     */  
+ 
     public BaseDaoImp() {  
         ParameterizedType type = (ParameterizedType) this.getClass().getGenericSuperclass();  
-        clazz = (Class<T>) type.getActualTypeArguments()[0];  
-        System.out.println("DAO的真实实现类是：" + this.clazz.getName());  
+        clazz = (Class<T>) type.getActualTypeArguments()[0];   
         sessionFactory = HibernateUtil.getSessionFactory();
     }  
   
   
     /** 
-     * 获取当前工作的Session 
+     * return current session 
      */  
     protected Session getSession() {
-//        Session session = this.sessionFactory.getCurrentSession();
-//        if(session.isOpen()){
-//            return session;
-//        }
-//        else
+
             return this.sessionFactory.openSession();  
     }  
   
@@ -149,9 +140,5 @@ public class BaseDaoImp<T> implements BaseDao <T> {
         } 
         return query.list();  
     }  
-
-//    public List<T> findByHQL(String hql) {  
-//        Query query = this.getSession().createQuery(hql);  
-//        return query.list(); 
-//    }    
+   
 }

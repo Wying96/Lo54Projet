@@ -21,13 +21,11 @@ import fr.utbm.repository.CourseDao;
  */
 @Repository(value = "courseDao")
 public class CourseDaoImp extends BaseDaoImp<Course> implements CourseDao {
-//筛选的解决方案 1.直接写HQL进行删选 或者  2.先选出全部再在service中进行筛选
+
 
     @Override
     public List<Course> findByTitle(String title) {
         Session session = this.getSession();
-        //这种写法有被sql注入的风险
-        //String hql = "from Course c where c.title like"+ '%'+title+'%';
         String hql = "from Course c where c.title like :partOfTitle";
         Query query = session.createQuery(hql);
         query.setString("partOfTitle", "%" + title + "%");
@@ -38,7 +36,7 @@ public class CourseDaoImp extends BaseDaoImp<Course> implements CourseDao {
     @Override
     public List<Course> findBy2SessionTime(Date startDate, Date endDate) {//Object... params
         Session session = this.getSession();
-        //Date startDate, Date endDate
+       
         String hql = "from Course c Left Join "
                 + "fetch c.courseSessionCollection v "
                 + "where v.startDate > :startDate and v.endDate < :endDate";
