@@ -69,7 +69,7 @@ public class testt {
 
         return new ModelAndView("home");
     }
-    
+
     @RequestMapping(value = "login")
     public ModelAndView validerCompte(HttpServletRequest request, HttpServletResponse response) {
         String userName = request.getParameter("accountNo");
@@ -101,11 +101,11 @@ public class testt {
 
         }
     }
-    
+
     @RequestMapping(value = "searchMultiCondition")
     public ModelAndView searchMultiCondition(HttpServletRequest request, HttpServletResponse response) {
         String email = request.getParameter("email");
-        
+
         String parteOfTitle = request.getParameter("title");
         String dateStart = request.getParameter("date1");
         String dateEnd = request.getParameter("date2");
@@ -143,7 +143,7 @@ public class testt {
 //        request.setAttribute("lists", locations);
 
         Users u = usersService.findByEmail(email);
-        
+
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("coursesession");
         modelAndView.addObject("user", u);
@@ -152,69 +152,86 @@ public class testt {
         return modelAndView;
     }
 
-    
-    public String delSpace(String str) throws Exception {  
-        if (str == null) {  
-            return null;  
-        }  
-        String regStartSpace = "^[　 ]*";  
-        String regEndSpace = "[　 ]*$";  
+    //TODO: put this funtion in to tools
+    public String delSpace(String str) throws Exception {
+        if (str == null) {
+            return null;
+        }
+        String regStartSpace = "^[　 ]*";
+        String regEndSpace = "[　 ]*$";
         // 连续两个 replaceAll   
         // 第一个是去掉前端的空格， 第二个是去掉后端的空格   
-        String strDelSpace = str.replaceAll(regStartSpace, "").replaceAll(regEndSpace, "");  
-        return strDelSpace;  
+        String strDelSpace = str.replaceAll(regStartSpace, "").replaceAll(regEndSpace, "");
+        return strDelSpace;
     }
-    
+
     //Action of POST 
     @RequestMapping(value = "inscrireCourse")
-    public ModelAndView inscrireCourse(HttpServletRequest request,HttpServletResponse response) throws Exception {
+    public ModelAndView inscrireCourse(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
         String email = request.getParameter("email");
         String courseId = this.delSpace(request.getParameter("courseSessionId"));
         int sessionId = Integer.parseInt(courseId);
+        Users u = usersService.findByEmail(email);
+        CourseSession cs = courseSessionService.findById(sessionId);
+
+        if (u.getCourseSessionCollection().contains(cs)) {
+
+            List<Course> coursesList = courseService.findAll();
+            List<Location> locations = locationService.findAll();
+            locations.add(0, new Location(null, null));
+
+            ModelAndView modelAndView = new ModelAndView();
+            modelAndView.addObject("user", u);
+            modelAndView.addObject("lists", locations);
+            modelAndView.addObject("coursesList", coursesList);
+            //
+            modelAndView.setViewName("coursesession");
+            return modelAndView;
+        }
         //user inscrire session 
         usersService.inscrirSession(email, sessionId);
-
-        Users u = usersService.findByEmail(email);
 
         List<Course> coursesList = courseService.findAll();
         List<Location> locations = locationService.findAll();
         locations.add(0, new Location(null, null));
-
+        Users uNew = usersService.findByEmail(email);
+        
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("user", u);
+        modelAndView.addObject("user", uNew);
         modelAndView.addObject("lists", locations);
         modelAndView.addObject("coursesList", coursesList);
         //
         modelAndView.setViewName("coursesession");
         return modelAndView;
-    }
-    
 
-    @RequestMapping(value = "/registrersession")
-    public String registrerSession(HttpServletRequest request, HttpServletResponse response) {
-        Integer id = Integer.parseInt(request.getParameter("coursesessionid"));
-
-//        courseService.fin
-        String lastname = request.getParameter("lastname");
-        String firstname = request.getParameter("firstname");
-        String address = request.getParameter("address");
-        String email = request.getParameter("email");
-        String phone = request.getParameter("phone");
-//        CourseSessionService courseSessionService=new CourseSessionService();
-        CourseSession cs = new CourseSession();
-        cs = courseSessionService.findById(id);
-        ClientService clientservice = new ClientService();
-        Client client = new Client();
-        client.setPhone(phone);
-        client.setAddress(address);
-        client.setCourseSessionId(cs);
-        client.setFirstname(firstname);
-        client.setEmail(email);
-        client.setLastname(lastname);
-        clientservice.save(client);
-        return "redirect:/";
     }
 
+//
+//    @RequestMapping(value = "/registrersession")
+//    public String registrerSession(HttpServletRequest request, HttpServletResponse response) {
+//        Integer id = Integer.parseInt(request.getParameter("coursesessionid"));
+//
+////        courseService.fin
+//        String lastname = request.getParameter("lastname");
+//        String firstname = request.getParameter("firstname");
+//        String address = request.getParameter("address");
+//        String email = request.getParameter("email");
+//        String phone = request.getParameter("phone");
+////        CourseSessionService courseSessionService=new CourseSessionService();
+//        CourseSession cs = new CourseSession();
+//        cs = courseSessionService.findById(id);
+//        ClientService clientservice = new ClientService();
+//        Client client = new Client();
+//        client.setPhone(phone);
+//        client.setAddress(address);
+//        client.setCourseSessionId(cs);
+//        client.setFirstname(firstname);
+//        client.setEmail(email);
+//        client.setLastname(lastname);
+//        clientservice.save(client);
+//        return "redirect:/";
+//    }
     @RequestMapping(value = "/inscrireclient")
     public ModelAndView inscrireClient(HttpServletRequest request, HttpServletResponse response) {
 //      Integer id=Integer.parseInt(request.getParameter("coursesessionid"));
@@ -241,8 +258,9 @@ public class testt {
             ModelAndView modelAndView = new ModelAndView();
             modelAndView.addObject("user", u);
             List<Course> coursesList = courseService.findAll();
-
             List<Location> locations = locationService.findAll();
+            locations.add(0, new Location(null, null));
+
             modelAndView.addObject("lists", locations);
             modelAndView.addObject("coursesList", coursesList);
             modelAndView.setViewName("coursesession");
@@ -261,6 +279,5 @@ public class testt {
 //     
         return new ModelAndView("inscrire");
     }
-
 
 }
