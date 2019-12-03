@@ -165,7 +165,7 @@ public class testt {
         return strDelSpace;
     }
 
-    //Action of POST 
+    //Action of POST pre inscrire
     @RequestMapping(value = "inscrireCourse")
     public ModelAndView inscrireCourse(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
