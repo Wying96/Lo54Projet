@@ -5,7 +5,6 @@
  */
 package fr.utbm.controller;
 
-import fr.utbm.entity.Client;
 import fr.utbm.entity.Course;
 import fr.utbm.entity.CourseSession;
 import fr.utbm.entity.Location;
@@ -15,8 +14,7 @@ import fr.utbm.service.CourseService;
 import fr.utbm.service.CourseSessionService;
 import fr.utbm.service.LocationService;
 import fr.utbm.service.UsersService;
-import java.io.IOException;
-import java.io.PrintWriter;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -55,11 +53,28 @@ public class CourseController {
     @Autowired
     public UsersService usersService;
 
-
-    @RequestMapping(value = "/")
-    public ModelAndView loginPage() {
-
-        return new ModelAndView("home");
+    //if courseList = null return all courses
+    //
+    public ModelAndView courseSessionPage(Users u, String searchName, List<Course> courseList,
+            String searchBeginDate,String searchEndDate, String searchLocation) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("user", u);
+        if(courseList==null){
+            List<Course> coursesList = courseService.findAll();
+            modelAndView.addObject("coursesList", coursesList);
+        }else{
+            modelAndView.addObject("coursesList", courseList);
+        }
+        List<Location> locations = locationService.findAll();
+        modelAndView.addObject("lists", locations);
+        modelAndView.setViewName("coursesession");
+        
+        modelAndView.addObject("searchName", searchName);
+        modelAndView.addObject("searchBeginDate", searchBeginDate);
+        modelAndView.addObject("searchEndDate", searchEndDate);
+        modelAndView.addObject("searchLocation", searchLocation);
+        
+        return modelAndView;
     }
 
     @RequestMapping(value = "login")
@@ -68,23 +83,23 @@ public class CourseController {
         String password = request.getParameter("pwd");
 
         boolean isValidUser = usersService.checkLogin(userName, password);
-        if (!isValidUser) {     
+        if (!isValidUser) {
             return new ModelAndView("home", "error", "le mot de passe ou identifiant est incorrect!");
         } else {
             Users u = usersService.findByEmail(userName);
-            List<Course> coursesList = courseService.findAll();
-            List<Location> locations = locationService.findAll();
-            locations.add(0, new Location(null, null));
-            request.getSession().setAttribute("user", u);
-            ModelAndView modelAndView = new ModelAndView();
-            modelAndView.addObject("lists", locations);
-            modelAndView.addObject("coursesList", coursesList);
-            modelAndView.setViewName("coursesession");
-            return modelAndView;
+            
+            return this.courseSessionPage(u, null, null, 
+                    null, null, null);
+           
         }
     }
 
-    
+    @RequestMapping(value = "/")
+    public ModelAndView loginPage() {
+
+        return new ModelAndView("home");
+    }
+
     @RequestMapping(value = "searchMultiCondition")
     public ModelAndView searchMultiCondition(HttpServletRequest request, HttpServletResponse response) {
         String email = request.getParameter("email");
@@ -99,7 +114,7 @@ public class CourseController {
         if (dateStart != "") {
             try {
                 startDate = sdf.parse(dateStart);
-            } catch (ParseException ex) {               
+            } catch (ParseException ex) {
             }
         } else {
             startDate = null;
@@ -108,29 +123,24 @@ public class CourseController {
             try {
                 endDate = sdf.parse(dateEnd);
             } catch (ParseException ex) {
-                }
+            }
         } else {
             endDate = null;
         }
-        List<Course> coursesResults = courseService.findByMultiCcondition(parteOfTitle, startDate, endDate, locationId);
-        List<Location> locations = locationService.findAll();
-        locations.add(0, new Location(null, null));
         Users u = usersService.findByEmail(email);
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("coursesession");
-        modelAndView.addObject("user", u);
-        modelAndView.addObject("lists", locations);
-        modelAndView.addObject("coursesList", coursesResults);
-        return modelAndView;
-    }
 
+        List<Course> coursesResults = courseService.findByMultiCcondition(
+                parteOfTitle, startDate, endDate, locationId);
+        return this.courseSessionPage(u, parteOfTitle, coursesResults, 
+                dateStart, dateEnd, locaId);
+    }
 
     public String delSpace(String str) throws Exception {
         if (str == null) {
             return null;
         }
         String regStartSpace = "^[　 ]*";
-        String regEndSpace = "[　 ]*$";  
+        String regEndSpace = "[　 ]*$";
         String strDelSpace = str.replaceAll(regStartSpace, "").replaceAll(regEndSpace, "");
         return strDelSpace;
     }
@@ -144,28 +154,15 @@ public class CourseController {
         Users u = usersService.findByEmail(email);
         CourseSession cs = courseSessionService.findById(sessionId);
         if (u.getCourseSessionCollection().contains(cs)) {
-            List<Course> coursesList = courseService.findAll();
-            List<Location> locations = locationService.findAll();
-            locations.add(0, new Location(null, null));
-            ModelAndView modelAndView = new ModelAndView();
-            modelAndView.addObject("user", u);
-            modelAndView.addObject("lists", locations);
-            modelAndView.addObject("coursesList", coursesList);           
-            modelAndView.setViewName("coursesession");
-            return modelAndView;
+
+             return this.courseSessionPage(u, null, null, 
+                    null, null, null);
         }
         usersService.inscrirSession(email, sessionId);
-        List<Course> coursesList = courseService.findAll();
-        List<Location> locations = locationService.findAll();
-        locations.add(0, new Location(null, null));
-        Users uNew = usersService.findByEmail(email);        
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("user", uNew);
-        modelAndView.addObject("lists", locations);
-        modelAndView.addObject("coursesList", coursesList);
-        modelAndView.setViewName("coursesession");
-        return modelAndView;
+        Users uNew = usersService.findByEmail(email);
 
+         return this.courseSessionPage(uNew, null, null, 
+                    null, null, null);
     }
 
     @RequestMapping(value = "/inscrireclient")
@@ -187,17 +184,9 @@ public class CourseController {
             u.setLastname(lastname);
             u.setPassword(pwd);
             usersService.save(u);
-            request.getSession().setAttribute("user", u);
-            ModelAndView modelAndView = new ModelAndView();
-            modelAndView.addObject("user", u);
-            List<Course> coursesList = courseService.findAll();
-            List<Location> locations = locationService.findAll();
-            locations.add(0, new Location(null, null));
-            modelAndView.addObject("lists", locations);
-            modelAndView.addObject("coursesList", coursesList);
-            modelAndView.setViewName("coursesession");
 
-            return modelAndView;
+            return this.courseSessionPage(u, null, null, 
+                    null, null, null);
 
         } else {
             return new ModelAndView("inscrire", "msg", "email déjà existe");

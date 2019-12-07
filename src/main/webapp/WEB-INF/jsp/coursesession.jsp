@@ -25,18 +25,25 @@
 
                 <button class="sui-btn btn-success"><a href="inscrire">s'inscrire</a></button></c:if>
             <c:if test="${not empty user}"> <div class="sui-container">
-                    <h4 align="center"> Bienvenue : ${user.email}</h4>
+                    <h4 align="center"> Bienvenue : ${user.email} </h4>
                 </div></c:if>
 
                 <div class="sui-container">
                     <form class="sui-form form-search" action="searchMultiCondition" method="post" >
-                        Part of Title: <input type="text" class="input-medium search-query" name="title">
+                        Part of Title: <input type="text" class="input-medium search-query" 
+                                              value="${searchName}" name="title">
                         <input type='hidden' readonly="true" name='email' value="${user.email}">
-                        <span> Start After Date：</span><input type="date" name="date1" data-date-format="YYYY-MM-DD" lang="en"/>
-                        <span> End Before Date：</span><input type="date" name="date2" pattern="YYYY-DD-MM" lang="en"/>
+                        <span> Start After Date：</span><input type="date" name="date1" 
+                         data-date-format="YYYY-MM-DD" value="${searchBeginDate}" lang="en"/>
+                        <span> End Before Date：</span><input type="date" name="date2" 
+                        pattern="YYYY-DD-MM" value="${searchEndDate}" lang="en"/>
                         Choose one location:                 
-                        <select name="city" id="cityName" > 
+                        <select name="city" id="cityName"> 
+                            <option value=""> All</option>
                         <c:forEach var="cityname" items="${lists}"> 
+                            <c:if test="${cityname.id == searchLocation}">
+                                <option value="${cityname.id}" selected hidden>${cityname.city}</option>
+                            </c:if>
                             <option value="${cityname.id}">${cityname.city}</option> 
                         </c:forEach> 
                     </select> 
